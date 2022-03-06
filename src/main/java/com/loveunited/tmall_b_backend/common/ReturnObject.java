@@ -20,7 +20,6 @@ public class ReturnObject {
     public ReturnObject(Boolean success, Object result, Integer code) {
         this.success = success;
         this.result = result;
-        this.message = "";
         this.code = code;
     }
 

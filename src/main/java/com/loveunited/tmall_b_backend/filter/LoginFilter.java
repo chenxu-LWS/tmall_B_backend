@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebFilter(urlPatterns = {"/*"})
 public class LoginFilter implements Filter {
 
-    private static final String SESSION_KEY = "current_customer_session";
-    private static final String COOKIE_KEY = "current_customer_cookie";
+    private static final String SESSION_KEY = "current_user_session";
+    private static final String COOKIE_KEY = "current_user_cookie";
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

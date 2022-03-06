@@ -12,20 +12,21 @@ import lombok.Data;
 public class ReturnListObject {
     Boolean success;
     List<Object> result;
-    String info;
+    String message;
+    Integer code;
 
     public ReturnListObject() {
     }
 
-    public ReturnListObject(Boolean success, List<Object> result) {
+    public ReturnListObject(Boolean success, List<Object> result, Integer code) {
         this.success = success;
         this.result = result;
-        this.info = "";
+        this.code = code;
     }
 
-    public ReturnListObject(Boolean success, List<Object> result, String info) {
+    public ReturnListObject(Boolean success, List<Object> result, String message) {
         this.success = success;
         this.result = result;
-        this.info = info;
+        this.message = message;
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.exception.BizException;
-import com.loveunited.tmall_b_backend.mapper.CustomerMapper;
+import com.loveunited.tmall_b_backend.mapper.UserMapper;
 
 /**
  * @author LiuWenshuo
@@ -14,18 +14,18 @@ import com.loveunited.tmall_b_backend.mapper.CustomerMapper;
 @Service
 public class LoginService {
     @Autowired
-    CustomerMapper customerMapper;
+    UserMapper userMapper;
 
     public Integer register(String name, String password) {
         // 判断是否有重名的
-        if (customerMapper.queryCustomerByName(name) != null) {
+        if (userMapper.queryUserByName(name) != null) {
             throw new BizException(ErrInfo.REGISTER_ERR_NAME_EXISTS);
         }
-        return customerMapper.insertCustomer(name, password);
+        return userMapper.insertUser(name, password);
     }
 
     public Integer login(String name, String password) {
-        if (customerMapper.queryCustomerByNameAndPass(name, password) == null) {
+        if (userMapper.queryUserByNameAndPass(name, password) == null) {
             throw new BizException(ErrInfo.LOGIN_ERR_NAME_NOT_EXISTS);
         }
         return 0;

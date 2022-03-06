@@ -8,9 +8,8 @@ import lombok.Getter;
  */
 @Getter
 public enum ErrInfo {
-    AUTHORIZATION_IS_NULL(1001, "尚未登陆，请登陆后重试"),
-    LOGIN_ERR_NAME_NOT_EXISTS(1002, "用户名不存在或密码错误，请重试"),
-    REGISTER_ERR_NAME_EXISTS(1003, "该用户名已被占用");
+    LOGIN_ERR_NAME_NOT_EXISTS(1001, "用户名不存在或密码错误，请重试"),
+    REGISTER_ERR_NAME_EXISTS(1002, "该用户名已被占用");
 
     Integer code;
     String message;
