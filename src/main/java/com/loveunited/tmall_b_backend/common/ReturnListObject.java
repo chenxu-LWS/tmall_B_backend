@@ -12,8 +12,8 @@ import lombok.Data;
 public class ReturnListObject {
     Boolean success;
     List<Object> result;
-    String message;
     Integer code;
+    String message;
 
     public ReturnListObject() {
     }
@@ -24,9 +24,10 @@ public class ReturnListObject {
         this.code = code;
     }
 
-    public ReturnListObject(Boolean success, List<Object> result, String message) {
+    public ReturnListObject(Boolean success, List<Object> result, Integer code, String message) {
         this.success = success;
         this.result = result;
+        this.code = code;
         this.message = message;
     }
 }

@@ -3,6 +3,7 @@ package com.loveunited.tmall_b_backend.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import com.loveunited.tmall_b_backend.entity.Category;
@@ -17,8 +18,9 @@ public interface CategoryMapper {
     public Category queryCategoryById(Integer id);
     public List<Category> querySubCategoryById(Integer id);
     public Category queryParentCategoryById(Integer id);
+    public List<Category> queryAllCategory();
 
-    public Integer insertCategory(String name, Integer parentId, Integer level);
+    public Integer insertCategory(@Param("name") String name, @Param("parentId") Integer parentId, @Param("level") Integer level);
     public Integer deleteCategory(Integer id);
-    public Integer increaseCategoryCommodityNum(Integer id);
+    public Integer increaseOrDecreaseCategoryCommodityNum(Integer id, Integer num);
 }

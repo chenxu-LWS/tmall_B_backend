@@ -10,8 +10,8 @@ import lombok.Data;
 public class ReturnObject {
     Boolean success;
     Object result;
-    String message;
     Integer code;
+    String message;
 
     public ReturnObject() {
 
@@ -23,10 +23,10 @@ public class ReturnObject {
         this.code = code;
     }
 
-    public ReturnObject(Boolean success, Object result, String message, Integer code) {
+    public ReturnObject(Boolean success, Object result, Integer code, String message) {
         this.success = success;
         this.result = result;
-        this.message = message;
         this.code = code;
+        this.message = message;
     }
 }

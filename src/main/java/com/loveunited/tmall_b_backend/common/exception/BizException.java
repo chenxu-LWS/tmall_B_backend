@@ -1,4 +1,4 @@
-package com.loveunited.tmall_b_backend.exception;
+package com.loveunited.tmall_b_backend.common.exception;
 
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 

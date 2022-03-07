@@ -1,7 +1,10 @@
 package com.loveunited.tmall_b_backend.controller.login.dto;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author LiuWenshuo
@@ -9,7 +12,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class UserDTO {
+@ToString
+public class UserDTO implements Serializable {
     private String name;
     private String password;
 }

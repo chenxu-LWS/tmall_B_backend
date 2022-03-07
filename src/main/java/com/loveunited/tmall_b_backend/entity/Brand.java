@@ -6,13 +6,12 @@ import lombok.ToString;
 
 /**
  * @author LiuWenshuo
- * Created on 2022-02-01
+ * Created on 2022-03-07
  */
 @Getter
 @Setter
 @ToString
-public class User {
+public class Brand {
     private String id;
-    private String name;
-    private String password;
+    private String name; // 品牌名
 }

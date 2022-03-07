@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
-import com.loveunited.tmall_b_backend.exception.BizException;
+import com.loveunited.tmall_b_backend.common.exception.BizException;
 import com.loveunited.tmall_b_backend.mapper.UserMapper;
 
 /**

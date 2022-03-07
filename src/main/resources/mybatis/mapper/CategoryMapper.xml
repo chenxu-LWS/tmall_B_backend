@@ -3,16 +3,31 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.loveunited.tmall_b_backend.mapper.CategoryMapper">
-    <select id="queryCategoryById" resultType="Category">
+    <resultMap id="categoryMap" type="Category">
+        <id column="id" property="id"/>
+        <result column="category_name" property="name"/>
+        <result column="parent_category_id" property="parentCategoryID"/>
+        <result column="category_level" property="level"/>
+        <result column="commodity_num" property="commodityNum"/>
+    </resultMap>
+    <select id="queryCategoryById" resultMap="categoryMap">
         select * from category where id=#{id}
     </select>
 
-    <select id="querySubCategoryById" resultType="Category">
+    <select id="querySubCategoryById" resultMap="categoryMap">
         select * from category where parent_category_ID=#{id}
     </select>
 
-    <select id="queryParentCategoryById" resultType="Category">
+    <select id="queryParentCategoryById" resultMap="categoryMap">
         select * from category where id=(select parent_category_ID from category where id = #{id})
+    </select>
+
+    <select id="queryAllCategory" resultMap="categoryMap">
+        select * from category
+    </select>
+
+    <select id="queryDeepestLevel" resultType="java.lang.Integer">
+        select max(category_level) from category
     </select>
 
     <insert id="insertCategory">
@@ -25,13 +40,13 @@
         delete from category where id=#{id}
     </insert>
 
-    <update id="increaseCategoryCommodityNum">
+    <update id="increaseOrDecreaseCategoryCommodityNum">
         update category
         set commodity_num =
             (
                 select a.commodity_num from
                 (select * from category where id = #{id}) a
-        ) + 1
+        ) + (#{num})
         where id = #{id}
     </update>
 </mapper>
