@@ -12,6 +12,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Brand {
-    private String id;
+    private Integer id;
     private String name; // 品牌名
 }

@@ -35,7 +35,7 @@ public class BrandService {
 
     public Integer deleteBrandById(Integer id) throws BizException{
         if (brandMapper.queryBrandById(id) == null) {
-            throw new BizException(ErrInfo.DELETE_BRAND_FAILED);
+            throw new BizException(ErrInfo.BRAND_ID_NOT_EXISTS);
         }
         return brandMapper.deleteBrandById(id);
     }

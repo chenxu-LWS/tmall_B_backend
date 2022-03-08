@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loveunited.tmall_b_backend.mapper.CommodityMapper">
+    <resultMap id="commodityMap" type="Brand">
+        <id column="id" property="id"/>
+        <result column="category_id" property="categoryID"/>
+        <result column="brand_id" property="brandID"/>
+        <result column="commodity_price" property="price"/>
+        <result column="other_prop" property="props"/>
+        <result column="status" property="status"/>
+        <result column="detail" property="detail"/>
+        <result column="inventory" property="inventory"/>
+    </resultMap>
+
+    <select id="queryCommodityById" resultMap="commodityMap">
+        select * from commodity where id = #{id}
+    </select>
+
+    <select id="queryCommodityByBrandId" resultMap="commodityMap">
+        select * from commodity where brand_id = #{brandID}
+    </select>
+
+    <select id="queryCommodityPropsById" resultType="java.lang.String">
+        select other_prop from commodity where id = #{id}
+    </select>
+
+    <insert id="insertCommodity">
+        insert into commodity (category_id, brand_id, commodity_price, other_prop, detail)
+        values (#{categoryID}, #{brandID}, #{price}, #{props}, #{detail})
+    </insert>
+
+    <update id="updateCommodityProperties">
+        update commodity set other_prop=#{props} where id=#{id}
+    </update>
+
+    <update id="updateCommodityStatus">
+        update commodity set status=#{status} where id=#{id}
+    </update>
+
+    <update id="updateCommodityPrice">
+        update commodity set commodity_price=#{newPrice} where id=#{id}
+    </update>
+</mapper>

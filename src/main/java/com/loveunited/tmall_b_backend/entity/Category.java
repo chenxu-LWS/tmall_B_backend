@@ -12,9 +12,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Category {
-    private String id;
+    private Integer id;
     private String name; // 类型名
-    private String parentCategoryID; // 父类型ID
+    private Integer parentCategoryID; // 父类型ID
     private Integer level; // 类型所属的层级
     private Integer commodityNum; // 当前种类下的商品数量
 }

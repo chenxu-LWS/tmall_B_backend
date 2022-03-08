@@ -17,7 +17,7 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
-    public User queryUserById(String id) {
+    public User queryUserById(Integer id) {
         return userMapper.queryUserById(id);
     }
 

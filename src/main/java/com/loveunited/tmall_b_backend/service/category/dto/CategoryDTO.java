@@ -16,9 +16,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CategoryDTO {
-    private String id;
+    private Integer id;
     private String name; // 类型名
-    private String parentCategoryID; // 父类型ID
+    private Integer parentCategoryID; // 父类型ID
     private List<CategoryDTO> children; // 子类型
     private Integer level; // 类型所属的层级
     private Integer commodityNum; // 当前种类下的商品数量

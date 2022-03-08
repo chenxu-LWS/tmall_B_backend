@@ -27,13 +27,13 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @RequestMapping("/queryCategoryMap")
+    @RequestMapping("/queryMap")
     @ResponseBody
     public ReturnListObject queryCategoryMap() {
         return new ReturnListObject(true, new ArrayList<>(categoryService.queryCategoryMap()), 0);
     }
 
-    @RequestMapping("/querySubCategoryById")
+    @RequestMapping("/querySubById")
     @ResponseBody
     public ReturnListObject querySubCategoryById(Integer id) {
         if (id == null) {
@@ -48,7 +48,7 @@ public class CategoryController {
         }
     }
 
-    @RequestMapping("/queryParentCategoryById")
+    @RequestMapping("/queryParentById")
     @ResponseBody
     public ReturnObject queryParentCategoryById(Integer id) {
         if (id == null) {
@@ -63,7 +63,7 @@ public class CategoryController {
         }
     }
 
-    @RequestMapping("/insertCategory")
+    @RequestMapping("/insert")
     @ResponseBody
     public ReturnObject insertCategory(@RequestBody InsertCategoryDTO dto) {
         if (dto == null || dto.getName() == null || dto.getParentId() == null
@@ -79,7 +79,7 @@ public class CategoryController {
         }
     }
 
-    @RequestMapping("/deleteCategory")
+    @RequestMapping("/delete")
     @ResponseBody
     public ReturnObject deleteCategory(Integer id) {
         if (id == null) {

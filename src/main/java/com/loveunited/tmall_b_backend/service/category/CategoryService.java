@@ -22,13 +22,13 @@ public class CategoryService {
     CategoryMapper categoryMapper;
 
     /**
-     * 查询整个品类的分层结构
+     * 递归查询整个品类的分层结构
      */
     public List<CategoryDTO> queryCategoryMap() {
         List<CategoryDTO> result = new ArrayList<>();
         List<Category> allCategory = categoryMapper.queryAllCategory();
         for (Category category : allCategory) {
-            if ("0".equals(category.getParentCategoryID())) {
+            if (category.getParentCategoryID() == 0) {
                 CategoryDTO categoryDTO = new CategoryDTO(category);
                 getSubCategoryRecurse(categoryDTO, allCategory);
                 result.add(categoryDTO);

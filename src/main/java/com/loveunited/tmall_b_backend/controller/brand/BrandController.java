@@ -20,7 +20,7 @@ public class BrandController {
     @Autowired
     BrandService brandService;
 
-    @RequestMapping("/queryBrandById")
+    @RequestMapping("/queryById")
     @ResponseBody
     public ReturnObject queryBrandById(Integer id) {
         if (id == null) {
@@ -30,7 +30,7 @@ public class BrandController {
         return new ReturnObject(true, brandService.queryBrandById(id), 0);
     }
 
-    @RequestMapping("/insertBrand")
+    @RequestMapping("/insert")
     @ResponseBody
     public ReturnObject insertBrand(String name) {
         if (name == null || name.length() > 50) {
@@ -45,7 +45,7 @@ public class BrandController {
         }
     }
 
-    @RequestMapping("/deleteBrandById")
+    @RequestMapping("/deleteById")
     @ResponseBody
     public ReturnObject deleteBrandById(Integer id) {
         if (id == null) {

@@ -29,7 +29,7 @@ public class UserController {
 
     @RequestMapping("/queryUserById")
     @ResponseBody
-    public ReturnObject queryUserById(String userId) {
+    public ReturnObject queryUserById(Integer userId) {
         if (userId == null) {
             return new ReturnObject(false, null,
                     ErrInfo.PARAMETER_ERROR.getCode(), ErrInfo.PARAMETER_ERROR.getMessage());

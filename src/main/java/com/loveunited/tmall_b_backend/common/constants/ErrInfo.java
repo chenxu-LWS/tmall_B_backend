@@ -8,8 +8,6 @@ import lombok.Getter;
  */
 @Getter
 public enum ErrInfo {
-    // 通用错误码
-    PARAMETER_ERROR(1000, "参数不合法"),
     // 登录相关
     LOGIN_ERR_NAME_NOT_EXISTS(1001, "用户名不存在或密码错误，请重试"),
     REGISTER_ERR_NAME_EXISTS(1002, "该用户名已被占用"),
@@ -21,8 +19,14 @@ public enum ErrInfo {
     CATEGORY_ID_NOT_EXISTS(1006, "当前品类ID不存在"),
 
     // 品牌相关
-    DELETE_BRAND_FAILED(1007, "当前品牌ID不存在"),
-    INSERT_BRAND_NAME_EXISTS(1008, "待新增的品牌名已存在");
+    BRAND_ID_NOT_EXISTS(1007, "当前品牌ID不存在"),
+    INSERT_BRAND_NAME_EXISTS(1008, "待新增的品牌名已存在"),
+    // 商品相关
+
+
+    // 通用错误码
+    PARAMETER_ERROR(10000, "参数不合法"),
+    PARAMETER_ERROR_CANNOT_CAST_TO_JSON(10001, "参数无法转换为json,请检查");
 
     Integer code;
     String message;
