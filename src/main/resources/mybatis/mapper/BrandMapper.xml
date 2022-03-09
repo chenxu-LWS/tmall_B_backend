@@ -16,7 +16,7 @@
         select * from brand
     </select>
 
-    <insert id="insertBrand">
+    <insert id="insertBrand" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Brand">
         insert into brand (id, brand_name) values (null, #{name})
     </insert>
 

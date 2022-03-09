@@ -30,7 +30,9 @@ public class BrandService {
                 throw new BizException(ErrInfo.INSERT_BRAND_NAME_EXISTS);
             }
         }
-        return brandMapper.insertBrand(name);
+        Brand brand = new Brand(null, name);
+        brandMapper.insertBrand(brand);
+        return brand.getId();
     }
 
     public Integer deleteBrandById(Integer id) throws BizException{

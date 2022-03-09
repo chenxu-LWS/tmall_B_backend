@@ -16,5 +16,5 @@ import com.loveunited.tmall_b_backend.entity.CommodityPicture;
 public interface CommodityPictureMapper {
     public List<CommodityPicture> queryMainPicByCommodityId(Integer commodityId);
     public List<CommodityPicture> queryDetailPicByCommodityId(Integer commodityId);
-    public Integer insertPic(Integer commodityId, Integer pictureType, Integer pictureSequence, String pictureURL);
+    public Integer insertPic(CommodityPicture picture);
 }

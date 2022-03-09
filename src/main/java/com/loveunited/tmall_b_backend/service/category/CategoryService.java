@@ -97,7 +97,9 @@ public class CategoryService {
             }
             level = parentCategory.getLevel();
         }
-        return categoryMapper.insertCategory(name, parentId, level + 1);
+        Category category = new Category(null, name, parentId, level + 1, 0);
+        categoryMapper.insertCategory(category);
+        return category.getId();
     }
 
     /**
@@ -123,5 +125,19 @@ public class CategoryService {
      */
     public Integer increaseOrDecreaseCategoryCommodityNum(Integer id, Integer num) {
         return categoryMapper.increaseOrDecreaseCategoryCommodityNum(id, num);
+    }
+
+    /**
+     * 上架/下架一个商品时，品类自底向上的商品数量都+1
+     * @return
+     */
+    public Integer increaseOrDecreaseComNumToRoot(Integer id, Integer num) {
+        // 只要还没到根结点,就继续
+        if (id == 0) {
+            return 0;
+        }
+        System.out.println(id);
+        categoryMapper.increaseOrDecreaseCategoryCommodityNum(id, num);
+        return increaseOrDecreaseCategoryCommodityNum(categoryMapper.queryCategoryById(id).getParentCategoryID(), num);
     }
 }

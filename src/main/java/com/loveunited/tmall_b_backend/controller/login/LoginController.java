@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.loveunited.tmall_b_backend.common.ReturnObject;
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
-import com.loveunited.tmall_b_backend.controller.login.dto.UserDTO;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
+import com.loveunited.tmall_b_backend.controller.login.dto.UserDTO;
 import com.loveunited.tmall_b_backend.service.login.LoginService;
 
 /**
@@ -39,6 +39,7 @@ public class LoginController {
         }
         try {
             Integer result = loginService.register(dto.getName(), dto.getPassword());
+            System.out.println(result);
             return new ReturnObject(true, result, 0);
         } catch (BizException e) {
             return new ReturnObject(false, null, e.getCode(), e.getMessage());

@@ -24,7 +24,7 @@
         select * from user where user_name = #{name} and password = #{password}
     </select>
 
-    <insert id="insertUser">
+    <insert id="insertUser" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="User">
         insert into user (id, user_name, password) values (null, #{name}, #{password})
     </insert>
 </mapper>

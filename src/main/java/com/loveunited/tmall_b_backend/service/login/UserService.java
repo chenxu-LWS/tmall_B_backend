@@ -1,4 +1,4 @@
-package com.loveunited.tmall_b_backend.service.user;
+package com.loveunited.tmall_b_backend.service.login;
 
 import java.util.List;
 
@@ -23,9 +23,5 @@ public class UserService {
 
     public List<User> queryUserList() {
         return userMapper.queryUserList();
-    }
-
-    public Integer insertUser(String name, String password) {
-        return userMapper.insertUser(name, password);
     }
 }

@@ -21,8 +21,11 @@ public enum ErrInfo {
     // 品牌相关
     BRAND_ID_NOT_EXISTS(1007, "当前品牌ID不存在"),
     INSERT_BRAND_NAME_EXISTS(1008, "待新增的品牌名已存在"),
-    // 商品相关
 
+    // 商品相关
+    COMMODITY_ID_NOT_EXISTS(1009, "当前商品ID不存在"),
+    COMMODITY_ALREADY_ON_SALE(1010, "商品已经上架了"),
+    COMMODITY_STATUS_ERROR(1011, "请先上架商品或商品已经被下架"),
 
     // 通用错误码
     PARAMETER_ERROR(10000, "参数不合法"),

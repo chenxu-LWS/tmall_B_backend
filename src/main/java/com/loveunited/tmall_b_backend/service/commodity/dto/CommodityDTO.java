@@ -19,6 +19,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class CommodityDTO {
     private Integer id;
+    private String name;
     private Category category;// 所属品类ID
     private Brand brand;// 所属品牌ID
     private Double price;// 商品售价
@@ -27,6 +28,7 @@ public class CommodityDTO {
 
     public CommodityDTO(Commodity commodity) {
         this.id = commodity.getId();
+        this.name = commodity.getName();
         this.price = commodity.getPrice();
         this.props = commodity.getProps();
         this.status = commodity.getStatus();

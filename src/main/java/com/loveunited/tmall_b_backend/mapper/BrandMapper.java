@@ -18,6 +18,6 @@ public interface BrandMapper {
     public Brand queryBrandById(Integer id);
     public List<Brand> queryAllBrand();
 
-    public Integer insertBrand(@Param("name") String name);
+    public Integer insertBrand(Brand brand);
     public Integer deleteBrandById(@Param("id") Integer id);
 }

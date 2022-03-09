@@ -14,6 +14,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class InsertCategoryDTO implements Serializable {
-    String name;
-    Integer parentId;
+    private String name;
+    private Integer parentId;
 }

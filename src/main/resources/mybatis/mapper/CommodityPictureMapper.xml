@@ -23,8 +23,8 @@
         order by picture_sequence;
     </select>
 
-    <insert id="insertPic">
+    <insert id="insertPic" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="CommodityPicture">
         insert into commodity_picture (commodity_id, picture_type, picture_sequence, picture_URL)
-        values (#{commodityId}, #{pictureType}, #{pictureSequence}, #{pictureURL})
+        values (#{commodityId}, #{pictureType}, (select max(picture_sequence) from commodity_picture where id = #{commodityId}) + 1, #{pictureURL})
     </insert>
 </mapper>

@@ -20,7 +20,7 @@ public interface CategoryMapper {
     public Category queryParentCategoryById(Integer id);
     public List<Category> queryAllCategory();
 
-    public Integer insertCategory(@Param("name") String name, @Param("parentId") Integer parentId, @Param("level") Integer level);
-    public Integer deleteCategory(Integer id);
-    public Integer increaseOrDecreaseCategoryCommodityNum(Integer id, Integer num);
+    public Integer insertCategory(Category category);
+    public Integer deleteCategory(@Param("id") Integer id);
+    public Integer increaseOrDecreaseCategoryCommodityNum(@Param("id") Integer id, @Param("num") Integer num);
 }

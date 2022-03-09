@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
+import com.loveunited.tmall_b_backend.entity.User;
 import com.loveunited.tmall_b_backend.mapper.UserMapper;
 
 /**
@@ -21,7 +22,9 @@ public class LoginService {
         if (userMapper.queryUserByName(name) != null) {
             throw new BizException(ErrInfo.REGISTER_ERR_NAME_EXISTS);
         }
-        return userMapper.insertUser(name, password);
+        User user = new User(null, name, password);
+        userMapper.insertUser(user);
+        return user.getId();
     }
 
     public Integer login(String name, String password) {

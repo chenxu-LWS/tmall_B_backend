@@ -3,8 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.loveunited.tmall_b_backend.mapper.CommodityMapper">
-    <resultMap id="commodityMap" type="Brand">
+    <resultMap id="commodityMap" type="Commodity">
         <id column="id" property="id"/>
+        <result column="commodity_name" property="name"/>
         <result column="category_id" property="categoryID"/>
         <result column="brand_id" property="brandID"/>
         <result column="commodity_price" property="price"/>
@@ -26,9 +27,28 @@
         select other_prop from commodity where id = #{id}
     </select>
 
-    <insert id="insertCommodity">
-        insert into commodity (category_id, brand_id, commodity_price, other_prop, detail)
-        values (#{categoryID}, #{brandID}, #{price}, #{props}, #{detail})
+    <select id="queryCommodityListByStatus" resultMap="commodityMap">
+        select * from commodity where status = #{status}
+    </select>
+
+    <select id="batchQueryCommodityByCategoryId" resultMap="commodityMap" parameterType="list">
+        select * from commodity where category_id in 
+        <foreach collection="list" item="categories" open="(" separator="," close=")">
+            #{categories}
+        </foreach>
+    </select>
+
+    <select id="queryCommodityByCategoryIdAndBrandId" resultMap="commodityMap" parameterType="list">
+        select * from commodity where category_id in
+            <foreach collection="list" item="categories" open="(" separator="," close=")">
+                #{categories}
+            </foreach>
+        and brand_id = #{branchId};
+    </select>
+
+    <insert id="insertCommodity" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Commodity">
+        insert into commodity (commodity_name, category_id, brand_id, commodity_price, other_prop, detail)
+        values (#{name}, #{categoryID}, #{brandID}, #{price}, #{props}, #{detail})
     </insert>
 
     <update id="updateCommodityProperties">

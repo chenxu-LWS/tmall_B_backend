@@ -5,17 +5,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.loveunited.tmall_b_backend.common.ReturnListObject;
 import com.loveunited.tmall_b_backend.common.ReturnObject;
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
-import com.loveunited.tmall_b_backend.controller.login.dto.UserDTO;
 import com.loveunited.tmall_b_backend.entity.User;
-import com.loveunited.tmall_b_backend.service.user.UserService;
+import com.loveunited.tmall_b_backend.service.login.UserService;
 
 /**
  * @author LiuWenshuo
@@ -43,12 +40,5 @@ public class UserController {
     public ReturnListObject queryUserList() {
         List<User> user = userService.queryUserList();
         return new ReturnListObject(true, new ArrayList<>(user), 0);
-    }
-
-    @PostMapping(value = "/insertUser")
-    @ResponseBody
-    public Object insertUser(@RequestBody UserDTO userDTO) {
-        userService.insertUser(userDTO.getName(), userDTO.getPassword());
-        return new ReturnObject(true, null, 0);
     }
 }

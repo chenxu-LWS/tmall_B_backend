@@ -17,7 +17,7 @@ import com.loveunited.tmall_b_backend.entity.User;
 public interface UserMapper {
     public User queryUserById(Integer id);
     public List<User> queryUserList();
-    public Integer insertUser(@Param("name") String name, @Param("password") String password);
+    public Integer insertUser(User user);
     public User queryUserByName(@Param("name") String name);
     public User queryUserByNameAndPass(@Param("name") String name, @Param("password") String password);
 }
