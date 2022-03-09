@@ -1,4 +1,4 @@
-package com.loveunited.tmall_b_backend.controller.Commodity.dto;
+package com.loveunited.tmall_b_backend.controller.commodity.dto;
 
 import java.io.Serializable;
 import java.util.List;

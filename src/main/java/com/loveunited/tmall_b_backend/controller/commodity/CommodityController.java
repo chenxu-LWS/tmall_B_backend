@@ -1,4 +1,4 @@
-package com.loveunited.tmall_b_backend.controller.Commodity;
+package com.loveunited.tmall_b_backend.controller.commodity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +13,8 @@ import com.loveunited.tmall_b_backend.common.ReturnListObject;
 import com.loveunited.tmall_b_backend.common.ReturnObject;
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
-import com.loveunited.tmall_b_backend.controller.Commodity.dto.InsertCommodityDTO;
-import com.loveunited.tmall_b_backend.controller.Commodity.dto.UpdateCommodityPropDTO;
+import com.loveunited.tmall_b_backend.controller.commodity.dto.InsertCommodityDTO;
+import com.loveunited.tmall_b_backend.controller.commodity.dto.UpdateCommodityPropDTO;
 import com.loveunited.tmall_b_backend.service.category.CategoryService;
 import com.loveunited.tmall_b_backend.service.commodity.CommodityService;
 import com.loveunited.tmall_b_backend.service.commodity.dto.CommodityDTO;
