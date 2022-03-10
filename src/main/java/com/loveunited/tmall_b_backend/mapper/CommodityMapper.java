@@ -26,4 +26,5 @@ public interface CommodityMapper {
     public Integer updateCommodityProperties(@Param("id") Integer id, @Param("props") String props);
     public Integer updateCommodityStatus(@Param("id") Integer id, @Param("status") Integer status);
     public Integer updateCommodityPrice(@Param("id") Integer id, @Param("newPrice") Integer newPrice);
+    public Integer increaseOrDecreaseCommodityNum(@Param("id") Integer id, @Param("stockNum") Integer stockNum);
 }

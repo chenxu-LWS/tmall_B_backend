@@ -28,8 +28,7 @@ public class UserController {
     @ResponseBody
     public ReturnObject queryUserById(Integer userId) {
         if (userId == null) {
-            return new ReturnObject(false, null,
-                    ErrInfo.PARAMETER_ERROR.getCode(), ErrInfo.PARAMETER_ERROR.getMessage());
+            return new ReturnObject(ErrInfo.PARAMETER_ERROR);
         }
         User user = userService.queryUserById(userId);
         return new ReturnObject(true, user, 0 );

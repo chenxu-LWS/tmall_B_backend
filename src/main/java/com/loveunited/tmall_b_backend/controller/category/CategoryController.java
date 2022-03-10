@@ -37,14 +37,13 @@ public class CategoryController {
     @ResponseBody
     public ReturnListObject querySubCategoryById(Integer id) {
         if (id == null) {
-            return new ReturnListObject(false, null,
-                    ErrInfo.PARAMETER_ERROR.getCode(), ErrInfo.PARAMETER_ERROR.getMessage());
+            return new ReturnListObject(ErrInfo.PARAMETER_ERROR);
         }
         try {
             List<Category> subCategoryById = categoryService.querySubCategoryById(id);
             return new ReturnListObject(true, new ArrayList<>(subCategoryById), 0);
         } catch (BizException e) {
-            return new ReturnListObject(false, null, e.getCode(), e.getMessage());
+            return new ReturnListObject(e);
         }
     }
 
@@ -52,14 +51,13 @@ public class CategoryController {
     @ResponseBody
     public ReturnObject queryParentCategoryById(Integer id) {
         if (id == null) {
-            return new ReturnObject(false, null,
-                    ErrInfo.PARAMETER_ERROR.getCode(), ErrInfo.PARAMETER_ERROR.getMessage());
+            return new ReturnObject(ErrInfo.PARAMETER_ERROR);
         }
         try {
             final Category parentCategory = categoryService.getParentCategoryById(id);
             return new ReturnObject(true, parentCategory, 0);
         } catch (BizException e) {
-            return new ReturnObject(false, null, e.getCode(), e.getMessage());
+            return new ReturnObject(e);
         }
     }
 
@@ -68,14 +66,13 @@ public class CategoryController {
     public ReturnObject insertCategory(@RequestBody InsertCategoryDTO dto) {
         if (dto == null || dto.getName() == null || dto.getParentId() == null
          || dto.getName().length() > 50) {
-            return new ReturnObject(false, null,
-                    ErrInfo.PARAMETER_ERROR.getCode(), ErrInfo.PARAMETER_ERROR.getMessage());
+            return new ReturnObject(ErrInfo.PARAMETER_ERROR);
         }
         try {
             final Integer result = categoryService.insertCategory(dto.getName(), dto.getParentId());
             return new ReturnObject(true, result, 0);
         } catch (BizException e) {
-            return new ReturnObject(false, null, e.getCode(), e.getMessage());
+            return new ReturnObject(e);
         }
     }
 
@@ -83,13 +80,12 @@ public class CategoryController {
     @ResponseBody
     public ReturnObject deleteCategory(Integer id) {
         if (id == null) {
-            return new ReturnObject(false, null,
-                    ErrInfo.PARAMETER_ERROR.getCode(), ErrInfo.PARAMETER_ERROR.getMessage());
+            return new ReturnObject(ErrInfo.PARAMETER_ERROR);
         }
         try {
             return new ReturnObject(true, categoryService.deleteCategory(id), 0);
         } catch (BizException e) {
-            return new ReturnObject(false, null, e.getCode(), e.getMessage());
+            return new ReturnObject(e);
         }
     }
 }

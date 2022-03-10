@@ -59,7 +59,6 @@ public class CommodityService {
         try {
             // 强转传入的props参数，校验合法性
             Map<String, Object> propMap = JSON.parseObject(props);
-            System.out.println(propMap);
         } catch (JSONException e) {
             throw new BizException(ErrInfo.PARAMETER_ERROR_CANNOT_CAST_TO_JSON);
         }
@@ -224,7 +223,6 @@ public class CommodityService {
     public Integer updateProp(Integer id, String prop) throws BizException{
         try {
             final Map<String, Object> result = JSON.parseObject(prop);
-            System.out.println(result);
         } catch (JSONException e) {
             throw new BizException(ErrInfo.PARAMETER_ERROR_CANNOT_CAST_TO_JSON);
         }

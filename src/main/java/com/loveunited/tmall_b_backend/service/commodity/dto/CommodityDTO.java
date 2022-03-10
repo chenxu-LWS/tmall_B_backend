@@ -25,6 +25,8 @@ public class CommodityDTO {
     private Double price;// 商品售价
     private String props;// 商品其他属性，json字符串
     private Integer status;// 商品状态,已创建为(0)，已上架为1，已下架为2
+    private String detail;// 商品描述
+    private Integer inventory;// 库存
 
     public CommodityDTO(Commodity commodity) {
         this.id = commodity.getId();
@@ -32,5 +34,7 @@ public class CommodityDTO {
         this.price = commodity.getPrice();
         this.props = commodity.getProps();
         this.status = commodity.getStatus();
+        this.inventory = commodity.getInventory();
+        this.detail = commodity.getDetail();
     }
 }

@@ -1,5 +1,7 @@
 package com.loveunited.tmall_b_backend.entity;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +22,5 @@ public class StockDetail {
     private Integer commodityID;
     private Double stockPrice;
     private Integer stockNum;
+    private Date stockTime;
 }

@@ -2,6 +2,9 @@ package com.loveunited.tmall_b_backend.common;
 
 import java.util.List;
 
+import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
+import com.loveunited.tmall_b_backend.common.exception.BizException;
+
 import lombok.Data;
 
 /**
@@ -29,5 +32,19 @@ public class ReturnListObject {
         this.result = result;
         this.code = code;
         this.message = message;
+    }
+
+    public ReturnListObject(ErrInfo errInfo) {
+        this.success = false;
+        this.result = null;
+        this.code = errInfo.getCode();
+        this.message = errInfo.getMessage();
+    }
+
+    public ReturnListObject(BizException e) {
+        this.success = false;
+        this.result = null;
+        this.code = e.getCode();
+        this.message = e.getMessage();
     }
 }

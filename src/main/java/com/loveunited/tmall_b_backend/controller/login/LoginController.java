@@ -34,15 +34,13 @@ public class LoginController {
     @ResponseBody
     public ReturnObject register(@RequestBody UserDTO dto) {
         if (isNotValidDTO(dto)) {
-            return new ReturnObject(false, null,
-                    ErrInfo.PARAMETER_ERROR.getCode(), ErrInfo.PARAMETER_ERROR.getMessage());
+            return new ReturnObject(ErrInfo.PARAMETER_ERROR);
         }
         try {
             Integer result = loginService.register(dto.getName(), dto.getPassword());
-            System.out.println(result);
             return new ReturnObject(true, result, 0);
         } catch (BizException e) {
-            return new ReturnObject(false, null, e.getCode(), e.getMessage());
+            return new ReturnObject(e);
         }
     }
 
@@ -50,8 +48,7 @@ public class LoginController {
     @ResponseBody
     public ReturnObject login(HttpServletRequest req, HttpServletResponse resp, @RequestBody UserDTO dto) {
         if (isNotValidDTO(dto)) {
-            return new ReturnObject(false, null,
-                    ErrInfo.PARAMETER_ERROR.getCode(), ErrInfo.PARAMETER_ERROR.getMessage());
+            return new ReturnObject(ErrInfo.PARAMETER_ERROR);
         }
         try {
             // 登陆
@@ -63,7 +60,7 @@ public class LoginController {
             resp.addCookie(cookie);
             return new ReturnObject(true, null, 0);
         } catch (BizException e) {
-            return new ReturnObject(false, null, e.getCode(), e.getMessage());
+            return new ReturnObject(e);
         }
     }
 

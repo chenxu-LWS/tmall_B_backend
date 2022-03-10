@@ -1,5 +1,8 @@
 package com.loveunited.tmall_b_backend.common;
 
+import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
+import com.loveunited.tmall_b_backend.common.exception.BizException;
+
 import lombok.Data;
 
 /**
@@ -28,5 +31,19 @@ public class ReturnObject {
         this.result = result;
         this.code = code;
         this.message = message;
+    }
+
+    public ReturnObject(ErrInfo errInfo) {
+        this.success = false;
+        this.result = null;
+        this.code = errInfo.getCode();
+        this.message = errInfo.getMessage();
+    }
+
+    public ReturnObject(BizException e) {
+        this.success = false;
+        this.result = null;
+        this.code = e.getCode();
+        this.message = e.getMessage();
     }
 }

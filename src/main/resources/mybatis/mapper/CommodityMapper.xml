@@ -62,4 +62,14 @@
     <update id="updateCommodityPrice">
         update commodity set commodity_price=#{newPrice} where id=#{id}
     </update>
+
+    <update id="increaseOrDecreaseCommodityNum">
+        update commodity
+        set inventory =
+                    (
+                        select a.inventory from
+                                (select * from commodity where id = #{id}) a
+                    ) + (#{stockNum})
+        where id = #{id}
+    </update>
 </mapper>

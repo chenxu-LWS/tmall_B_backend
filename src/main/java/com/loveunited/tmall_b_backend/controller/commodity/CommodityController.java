@@ -43,8 +43,7 @@ public class CommodityController {
                 || dto.getBrandID() == null || dto.getMainPicBase64() == null
                 || dto.getMainPicBase64().isEmpty() || dto.getDetailPicBase64() == null
         || dto.getDetailPicBase64().isEmpty()) {
-            return new ReturnObject(false, null, ErrInfo.PARAMETER_ERROR.getCode(),
-                    ErrInfo.PARAMETER_ERROR.getMessage());
+            return new ReturnObject(ErrInfo.PARAMETER_ERROR);
         }
         try {
             // 记录在商品表
@@ -53,7 +52,7 @@ public class CommodityController {
             // TODO: 图片记录在图片表
             return new ReturnObject(true, result, 0);
         } catch (BizException e) {
-            return new ReturnObject(false, null, e.getCode(), e.getMessage());
+            return new ReturnObject(e);
         }
     }
 
@@ -61,8 +60,7 @@ public class CommodityController {
     @ResponseBody
     public ReturnListObject queryByStatus(Integer status) {
         if (status <0 || status > 2) {
-            return new ReturnListObject(false, null,
-                    ErrInfo.PARAMETER_ERROR.getCode(), ErrInfo.PARAMETER_ERROR.getMessage());
+            return new ReturnListObject(ErrInfo.PARAMETER_ERROR);
         }
         return new ReturnListObject(true,
                 new ArrayList<>(commodityService.queryCommodityListByStatus(status)), 0);
@@ -75,7 +73,7 @@ public class CommodityController {
             final CommodityDTO dto = commodityService.queryById(id);
             return new ReturnObject(true, dto, 0);
         } catch (BizException e) {
-            return new ReturnObject(false, null, e.getCode(), e.getMessage());
+            return new ReturnObject(e);
         }
     }
 
@@ -83,14 +81,13 @@ public class CommodityController {
     @ResponseBody
     public ReturnObject queryByCategoryId(Integer categoryId) {
         if (categoryId == null || categoryId <=0) {
-            return new ReturnObject(false, null,
-                    ErrInfo.PARAMETER_ERROR.getCode(), ErrInfo.PARAMETER_ERROR.getMessage());
+            return new ReturnObject(ErrInfo.PARAMETER_ERROR);
         }
         try {
             final List<CommodityDTO> commodityDTOS = commodityService.queryByCategoryId(categoryId);
             return new ReturnObject(true, commodityDTOS, 0);
         } catch (BizException e) {
-            return new ReturnObject(false, null, e.getCode(), e.getMessage());
+            return new ReturnObject(e);
         }
     }
 
@@ -101,7 +98,7 @@ public class CommodityController {
             final List<CommodityDTO> commodityDTOS = commodityService.queryByBrandId(brandId);
             return new ReturnObject(true, commodityDTOS, 0);
         } catch (BizException e) {
-            return new ReturnObject(false, null, e.getCode(), e.getMessage());
+            return new ReturnObject(e);
         }
     }
 
@@ -112,7 +109,7 @@ public class CommodityController {
             final List<CommodityDTO> commodityDTOS = commodityService.queryByBrandIdAndCategoryId(brandId, categoryId);
             return new ReturnObject(true, commodityDTOS, 0);
         } catch (BizException e) {
-            return new ReturnObject(false, null, e.getCode(), e.getMessage());
+            return new ReturnObject(e);
         }
     }
 
@@ -123,7 +120,7 @@ public class CommodityController {
             final Integer result = commodityService.putOnSale(id);
             return new ReturnObject(true, result, 0);
         } catch (BizException e) {
-            return new ReturnObject(false, null, e.getCode(), e.getMessage());
+            return new ReturnObject(e);
         }
     }
 
@@ -134,7 +131,7 @@ public class CommodityController {
             final Integer result = commodityService.putOffLine(id);
             return new ReturnObject(true, result, 0);
         } catch (BizException e) {
-            return new ReturnObject(false, null, e.getCode(), e.getMessage());
+            return new ReturnObject(e);
         }
     }
 
@@ -146,7 +143,7 @@ public class CommodityController {
             final Integer result = commodityService.updateProp(dto.getId(), dto.getNewProps());
             return new ReturnObject(true, result, 0);
         } catch (BizException e) {
-            return new ReturnObject(false, null, e.getCode(), e.getMessage());
+            return new ReturnObject(e);
         }
     }
 }

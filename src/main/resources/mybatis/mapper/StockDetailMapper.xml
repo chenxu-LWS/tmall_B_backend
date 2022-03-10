@@ -8,6 +8,19 @@
         <result property="commodityID" column="commodity_id"/>
         <result property="stockPrice" column="commodity_stock_price"/>
         <result property="stockNum" column="commodity_stock_num"/>
+        <result property="stockTime" column="stock_time"/>
     </resultMap>
-
+    
+    <select id="queryStockDetailById" resultMap="stockDetailMap">
+        select * from stock_detail where id = #{id};
+    </select>
+    
+    <select id="queryStockDetailByCommodityId" resultMap="stockDetailMap">
+        select * from stock_detail where commodity_id = #{commodityId}
+    </select>
+    
+    <insert id="insertStockDetail" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="StockDetail">
+        insert into stock_detail (id, commodity_id, commodity_stock_num, commodity_stock_price, stock_time)
+        values (null, #{commodityID}, #{stockNum}, #{stockPrice}, current_timestamp())
+    </insert>
 </mapper>

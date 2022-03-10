@@ -136,7 +136,6 @@ public class CategoryService {
         if (id == 0) {
             return 0;
         }
-        System.out.println(id);
         categoryMapper.increaseOrDecreaseCategoryCommodityNum(id, num);
         return increaseOrDecreaseCategoryCommodityNum(categoryMapper.queryCategoryById(id).getParentCategoryID(), num);
     }

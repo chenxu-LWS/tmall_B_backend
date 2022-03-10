@@ -24,8 +24,7 @@ public class BrandController {
     @ResponseBody
     public ReturnObject queryBrandById(Integer id) {
         if (id == null) {
-            return new ReturnObject(false, null,
-                    ErrInfo.PARAMETER_ERROR.getCode(), ErrInfo.PARAMETER_ERROR.getMessage());
+            return new ReturnObject(ErrInfo.PARAMETER_ERROR);
         }
         return new ReturnObject(true, brandService.queryBrandById(id), 0);
     }
@@ -34,14 +33,13 @@ public class BrandController {
     @ResponseBody
     public ReturnObject insertBrand(String name) {
         if (name == null || name.length() > 50) {
-            return new ReturnObject(false, null,
-                    ErrInfo.PARAMETER_ERROR.getCode(), ErrInfo.PARAMETER_ERROR.getMessage());
+            return new ReturnObject(ErrInfo.PARAMETER_ERROR);
         }
         try {
             final Integer result = brandService.insertBrand(name);
             return new ReturnObject(true, result, 0);
         } catch (BizException e) {
-            return new ReturnObject(false, null, e.getCode(), e.getMessage());
+            return new ReturnObject(e);
         }
     }
 
@@ -49,14 +47,13 @@ public class BrandController {
     @ResponseBody
     public ReturnObject deleteBrandById(Integer id) {
         if (id == null) {
-            return new ReturnObject(false, null,
-                    ErrInfo.PARAMETER_ERROR.getCode(), ErrInfo.PARAMETER_ERROR.getMessage());
+            return new ReturnObject(ErrInfo.PARAMETER_ERROR);
         }
         try {
             final Integer result = brandService.deleteBrandById(id);
             return new ReturnObject(true, result, 0);
         } catch (BizException e) {
-            return new ReturnObject(false, null, e.getCode(), e.getMessage());
+            return new ReturnObject(e);
         }
     }
 }
