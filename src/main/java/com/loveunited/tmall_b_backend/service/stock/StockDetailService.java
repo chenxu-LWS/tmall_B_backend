@@ -89,7 +89,7 @@ public class StockDetailService {
         StockDetail stockDetail = new StockDetail(null, commodityId, stockPrice, stockNum, null);
         stockDetailMapper.insertStockDetail(stockDetail);
         // 更新商品个数
-        commodityMapper.increaseOrDecreaseCommodityNum(commodityId, stockNum);
+        commodityMapper.increaseOrDecreaseInventory(commodityId, stockNum);
         return stockDetail.getId();
     }
 }

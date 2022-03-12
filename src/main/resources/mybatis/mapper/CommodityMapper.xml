@@ -46,7 +46,7 @@
         and brand_id = #{branchId};
     </select>
 
-    <insert id="insertCommodity" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Commodity">
+    <insert id="insertCommodity">
         insert into commodity (commodity_name, category_id, brand_id, commodity_price, other_prop, detail)
         values (#{name}, #{categoryID}, #{brandID}, #{price}, #{props}, #{detail})
     </insert>
@@ -63,7 +63,7 @@
         update commodity set commodity_price=#{newPrice} where id=#{id}
     </update>
 
-    <update id="increaseOrDecreaseCommodityNum">
+    <update id="increaseOrDecreaseInventory">
         update commodity
         set inventory =
                     (

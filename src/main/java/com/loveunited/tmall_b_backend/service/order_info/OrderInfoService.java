@@ -1,0 +1,62 @@
+package com.loveunited.tmall_b_backend.service.order_info;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.alibaba.fastjson.JSON;
+import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
+import com.loveunited.tmall_b_backend.common.exception.BizException;
+import com.loveunited.tmall_b_backend.entity.OrderInfo;
+import com.loveunited.tmall_b_backend.mapper.OrderInfoMapper;
+import com.loveunited.tmall_b_backend.service.order_info.dto.OrderInfoDTO;
+
+/**
+ * @author LiuWenshuo
+ * Created on 2022-03-11
+ */
+@Service
+public class OrderInfoService {
+    @Autowired
+    OrderInfoMapper orderInfoMapper;
+
+    public OrderInfoDTO queryOrderInfoById(Integer id) throws BizException {
+        final OrderInfo orderInfo = orderInfoMapper.queryOrderInfoById(id);
+        if (orderInfo == null) {
+            throw new BizException(ErrInfo.ORDERINFO_ID_NOT_EXISTS);
+        }
+        return new OrderInfoDTO(orderInfo);
+    }
+
+    public List<OrderInfoDTO> queryOrderInfoByCustomerName(String customerName) {
+        final List<OrderInfo> orderInfos = orderInfoMapper.queryOrderInfoByCustomerName(customerName);
+        List<OrderInfoDTO> result = new ArrayList<>();
+        orderInfos.forEach(orderInfo -> result.add(new OrderInfoDTO(orderInfo)));
+        return result;
+    }
+
+    public Integer insertOrderInfo(String customerName, String detail, Double orderPrice) {
+        final OrderInfo orderInfo = new OrderInfo(null, customerName, detail, orderPrice, null);
+        orderInfoMapper.insertOrderInfo(orderInfo);
+        return orderInfo.getId();
+    }
+
+    public Integer updateCommodityStatusInOrderInfo(Integer orderInfoId,
+            Integer commodityId, Integer newStatus) {
+        final OrderInfo oldOrderInfo = orderInfoMapper.queryOrderInfoById(orderInfoId);
+        final String oldDetail = oldOrderInfo.getDetail();
+        Map<String, Object> oldDetailJSON = JSON.parseObject(oldDetail);
+        oldDetailJSON.forEach((k, v) -> {
+            Map<String, Object> vMap = (Map<String, Object>) v;
+            if (Integer.parseInt(k) == commodityId) {
+                vMap.put("status", newStatus);
+            }
+        });
+        OrderInfo orderInfo = new OrderInfo(orderInfoId, null,
+                JSON.toJSONString(oldDetailJSON), null, null);
+        return orderInfoMapper.updateCommodityStatusInOrderInfo(orderInfo);
+    }
+}

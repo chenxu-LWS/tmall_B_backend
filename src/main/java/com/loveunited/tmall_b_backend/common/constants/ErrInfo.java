@@ -26,6 +26,16 @@ public enum ErrInfo {
     COMMODITY_ID_NOT_EXISTS(1009, "当前商品ID不存在"),
     COMMODITY_ALREADY_ON_SALE(1010, "商品已经上架了"),
     COMMODITY_STATUS_ERROR(1011, "请先上架商品或商品已经被下架"),
+    COMMODITY_PROP_FORMAT_ERROR(1012, "商品属性的json格式错误,需要是String-String的map形式"),
+
+    // 订单相关
+    ORDERINFO_DETAIL_FORMAT_ERROR(1013, "订单详情格式错误,请检查"),
+    ORDERINFO_ID_NOT_EXISTS(1014, "订单ID不存在"),
+    ORDERINFO_DETAIL_INVENTORY_INFINITY(1015, "商品库存不足"),
+    ORDERINFO_DETAIL_CONTAINS_COMM_NOT_EXISTS(1016, "订单中的商品ID不存在"),
+
+    // 退货单相关
+    BACKORDERINFO_ID_NOT_EXISTS(1016, "退货单ID不存在"),
 
     // 通用错误码
     PARAMETER_ERROR(10000, "参数不合法"),

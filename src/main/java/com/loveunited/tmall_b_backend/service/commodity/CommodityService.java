@@ -59,6 +59,11 @@ public class CommodityService {
         try {
             // 强转传入的props参数，校验合法性
             Map<String, Object> propMap = JSON.parseObject(props);
+            propMap.forEach((k, v) -> {
+                if (!(v instanceof String)) {
+                    throw new BizException(ErrInfo.COMMODITY_PROP_FORMAT_ERROR);
+                }
+            });
         } catch (JSONException e) {
             throw new BizException(ErrInfo.PARAMETER_ERROR_CANNOT_CAST_TO_JSON);
         }
@@ -223,6 +228,11 @@ public class CommodityService {
     public Integer updateProp(Integer id, String prop) throws BizException{
         try {
             final Map<String, Object> result = JSON.parseObject(prop);
+            result.forEach((k, v) -> {
+                if (!(v instanceof String)) {
+                    throw new BizException(ErrInfo.COMMODITY_PROP_FORMAT_ERROR);
+                }
+            });
         } catch (JSONException e) {
             throw new BizException(ErrInfo.PARAMETER_ERROR_CANNOT_CAST_TO_JSON);
         }
@@ -230,5 +240,22 @@ public class CommodityService {
             throw new BizException(ErrInfo.COMMODITY_ID_NOT_EXISTS);
         }
         return commodityMapper.updateCommodityProperties(id, prop);
+    }
+
+    /**
+     * 增加或减少商品库存
+     * @param id
+     * @param num
+     * @return
+     */
+    public Integer increaseOrDecreaseInventory(Integer id, Integer num) throws BizException{
+        final Commodity commodity = commodityMapper.queryCommodityById(id);
+        if (commodity == null) {
+            throw new BizException(ErrInfo.ORDERINFO_DETAIL_CONTAINS_COMM_NOT_EXISTS);
+        }
+        if (num <0 && Math.abs(num) > commodity.getInventory()) {
+            throw new BizException(ErrInfo.ORDERINFO_DETAIL_INVENTORY_INFINITY);
+        }
+        return commodityMapper.increaseOrDecreaseInventory(id, num);
     }
 }
