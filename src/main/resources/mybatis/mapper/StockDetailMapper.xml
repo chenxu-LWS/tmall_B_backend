@@ -10,13 +10,23 @@
         <result property="stockNum" column="commodity_stock_num"/>
         <result property="stockTime" column="stock_time"/>
     </resultMap>
-    
+
+    <select id="queryStockDetailAllByPage" resultMap="stockDetailMap">
+        select * from stock_detail limit #{offset}, #{pageSize}
+    </select>
+    <select id="queryStockDetailAllTotalNum" resultType="java.lang.Integer">
+        select count(*) from stock_detail
+    </select>
+
     <select id="queryStockDetailById" resultMap="stockDetailMap">
         select * from stock_detail where id = #{id};
     </select>
     
-    <select id="queryStockDetailByCommodityId" resultMap="stockDetailMap">
-        select * from stock_detail where commodity_id = #{commodityId}
+    <select id="queryStockDetailByCommodityIdByPage" resultMap="stockDetailMap">
+        select * from stock_detail where commodity_id = #{commodityId} limit #{offset}, #{pageSize}
+    </select>
+    <select id="queryStockDetailByCommodityIdTotalNum" resultType="java.lang.Integer">
+        select count(*) from stock_detail where commodity_id = #{commodityId}
     </select>
     
     <insert id="insertStockDetail" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="StockDetail">

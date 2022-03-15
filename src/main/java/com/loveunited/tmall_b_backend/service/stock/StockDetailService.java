@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
+import com.loveunited.tmall_b_backend.common.page.PageBean;
 import com.loveunited.tmall_b_backend.entity.Commodity;
 import com.loveunited.tmall_b_backend.entity.StockDetail;
 import com.loveunited.tmall_b_backend.mapper.BrandMapper;
@@ -33,6 +34,29 @@ public class StockDetailService {
     BrandMapper brandMapper;
 
     /**
+     * 查询所有进货信息
+     * @return
+     */
+    public PageBean<StockDetailDTO> queryStockDetailAllByPage(Integer pageNo, Integer pageSize) {
+        final List<StockDetail> stockDetails
+                = stockDetailMapper.queryStockDetailAllByPage(pageNo * pageSize, pageSize);
+        System.out.println(stockDetails);
+        List<StockDetailDTO> stockDetailDTOS = new ArrayList<>();
+        for (StockDetail stockDetail : stockDetails) {
+            StockDetailDTO dto = new StockDetailDTO(stockDetail);
+            final Commodity commodity = commodityMapper.queryCommodityById(stockDetail.getCommodityID());
+            dto.setCommodityDTO(getCommodityDTOFromCom(commodity));
+            stockDetailDTOS.add(dto);
+        }
+        PageBean<StockDetailDTO> result = new PageBean<>();
+        result.setPageNo(pageNo);
+        result.setPageSize(pageSize);
+        result.setTotalNum(stockDetailMapper.queryStockDetailAllTotalNum());
+        result.setList(stockDetailDTOS);
+        return result;
+    }
+
+    /**
      * 通过id查询进货信息
      * @param id
      * @return
@@ -53,21 +77,28 @@ public class StockDetailService {
      * @return
      * @throws BizException
      */
-    public List<StockDetailDTO> queryStockDetailByCommodityId(Integer commodityId) throws BizException{
-        final List<StockDetail> stockDetails = stockDetailMapper.queryStockDetailByCommodityId(commodityId);
+    public PageBean<StockDetailDTO> queryStockDetailByCommodityIdByPage(Integer commodityId, Integer pageNo, Integer pageSize) throws BizException{
+        final List<StockDetail> stockDetails =
+                stockDetailMapper.queryStockDetailByCommodityIdByPage(commodityId, pageNo * pageSize, pageSize);
         final Commodity commodity = commodityMapper.queryCommodityById(commodityId);
         if (commodity == null) {
             throw new BizException(ErrInfo.COMMODITY_ID_NOT_EXISTS);
         }
         CommodityDTO commodityDTO = getCommodityDTOFromCom(commodity);
 
-        List<StockDetailDTO> result = new ArrayList<>();
+        List<StockDetailDTO> dtoList = new ArrayList<>();
         for (StockDetail stockDetail : stockDetails) {
             StockDetailDTO stockDetailDTO = new StockDetailDTO(stockDetail);
             stockDetailDTO.setCommodityDTO(commodityDTO);
-            result.add(stockDetailDTO);
+            dtoList.add(stockDetailDTO);
         }
-        return result;
+        PageBean<StockDetailDTO> res = new PageBean<>();
+        res.setList(dtoList);
+        res.setPageNo(pageNo);
+        res.setPageSize(pageSize);
+        res.setTotalNum(stockDetailMapper
+                .queryStockDetailByCommodityIdTotalNum(commodityId));
+        return res;
     }
     private CommodityDTO getCommodityDTOFromCom(Commodity commodity) {
         CommodityDTO dto = new CommodityDTO(commodity);
