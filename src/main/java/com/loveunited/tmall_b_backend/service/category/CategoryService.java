@@ -49,6 +49,15 @@ public class CategoryService {
     }
 
     /**
+     * 通过层级查询层级下所有的品类
+     * @param level
+     * @return
+     */
+    public List<Category> queryCategoryByLevel(Integer level) {
+        return categoryMapper.queryCategoryByLevel(level);
+    }
+
+    /**
      * 查询一个品类的所有子品类
      * @param id
      * @return

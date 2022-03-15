@@ -19,6 +19,7 @@ public interface CategoryMapper {
     public List<Category> querySubCategoryById(Integer id);
     public Category queryParentCategoryById(Integer id);
     public List<Category> queryAllCategory();
+    public List<Category> queryCategoryByLevel(Integer level);
 
     public Integer insertCategory(Category category);
     public Integer deleteCategory(@Param("id") Integer id);

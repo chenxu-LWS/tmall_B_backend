@@ -61,6 +61,20 @@ public class CategoryController {
         }
     }
 
+    @RequestMapping("/queryByLevel")
+    @ResponseBody
+    public ReturnListObject queryByLevel(Integer level) {
+        if (level == null) {
+            return new ReturnListObject(ErrInfo.PARAMETER_ERROR);
+        }
+        try {
+            final List<Category> categories = categoryService.queryCategoryByLevel(level);
+            return new ReturnListObject(true, new ArrayList<>(categories), 0);
+        } catch (BizException e) {
+            return new ReturnListObject(e);
+        }
+    }
+
     @RequestMapping("/insert")
     @ResponseBody
     public ReturnObject insertCategory(@RequestBody InsertCategoryDTO dto) {

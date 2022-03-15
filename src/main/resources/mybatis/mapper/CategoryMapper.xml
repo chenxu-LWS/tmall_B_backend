@@ -49,4 +49,8 @@
         ) + (#{num})
         where id = #{id}
     </update>
+
+    <select id="queryCategoryByLevel" resultMap="categoryMap">
+        select * from category where category_level = #{level}
+    </select>
 </mapper>
