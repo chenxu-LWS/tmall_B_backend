@@ -1,19 +1,22 @@
 package com.loveunited.tmall_b_backend.controller.commodity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.loveunited.tmall_b_backend.common.ReturnListObject;
 import com.loveunited.tmall_b_backend.common.ReturnObject;
+import com.loveunited.tmall_b_backend.common.ReturnPageObject;
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
+import com.loveunited.tmall_b_backend.common.page.PageBean;
 import com.loveunited.tmall_b_backend.controller.commodity.dto.InsertCommodityDTO;
+import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryByBrandIdAndCategoryIdDTO;
+import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryByBrandIdByPageDTO;
+import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryByCategoryIdByPageDTO;
+import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryByStatusByPageDTO;
 import com.loveunited.tmall_b_backend.controller.commodity.dto.UpdateCommodityPropDTO;
 import com.loveunited.tmall_b_backend.service.category.CategoryService;
 import com.loveunited.tmall_b_backend.service.commodity.CommodityService;
@@ -56,14 +59,15 @@ public class CommodityController {
         }
     }
 
-    @RequestMapping("/queryByStatus")
+    @PostMapping("/queryByStatusByPage")
     @ResponseBody
-    public ReturnListObject queryByStatus(Integer status) {
-        if (status <0 || status > 2) {
-            return new ReturnListObject(ErrInfo.PARAMETER_ERROR);
+    public ReturnPageObject<CommodityDTO> queryByStatusByPage(@RequestBody QueryByStatusByPageDTO dto) {
+        if (dto == null || dto.getStatus() == null || dto.hasNull() || dto.getStatus() <0 || dto.getStatus() > 2) {
+            return new ReturnPageObject<>(ErrInfo.PARAMETER_ERROR);
         }
-        return new ReturnListObject(true,
-                new ArrayList<>(commodityService.queryCommodityListByStatus(status)), 0);
+        final PageBean<CommodityDTO> commodityDTOPageBean =
+                commodityService.queryCommodityListByStatusByPage(dto.getStatus(), dto.getPageNo(), dto.getPageSize());
+        return new ReturnPageObject<>(true, commodityDTOPageBean, 0);
     }
 
     @RequestMapping("/queryById")
@@ -77,39 +81,48 @@ public class CommodityController {
         }
     }
 
-    @RequestMapping("/queryByCategoryId")
+    @PostMapping("/queryByCategoryIdByPage")
     @ResponseBody
-    public ReturnObject queryByCategoryId(Integer categoryId) {
-        if (categoryId == null || categoryId <=0) {
-            return new ReturnObject(ErrInfo.PARAMETER_ERROR);
+    public ReturnPageObject<CommodityDTO> queryByCategoryIdByPage(@RequestBody QueryByCategoryIdByPageDTO dto) {
+        if (dto == null || dto.getCategoryId() == null ||dto.getCategoryId() <=0) {
+            return new ReturnPageObject<>(ErrInfo.PARAMETER_ERROR);
         }
         try {
-            final List<CommodityDTO> commodityDTOS = commodityService.queryByCategoryId(categoryId);
-            return new ReturnObject(true, commodityDTOS, 0);
+            final PageBean<CommodityDTO> commodityDTOPageBean = commodityService.queryByCategoryId(dto.getCategoryId(),
+                    dto.getPageNo(), dto.getPageSize());
+            return new ReturnPageObject<>(true, commodityDTOPageBean, 0);
         } catch (BizException e) {
-            return new ReturnObject(e);
-        }
-    }
-
-    @RequestMapping("/queryByBrandId")
-    @ResponseBody
-    public ReturnObject queryByBrandId(Integer brandId) {
-        try {
-            final List<CommodityDTO> commodityDTOS = commodityService.queryByBrandId(brandId);
-            return new ReturnObject(true, commodityDTOS, 0);
-        } catch (BizException e) {
-            return new ReturnObject(e);
+            return new ReturnPageObject<>(e);
         }
     }
 
-    @RequestMapping("/queryByBrandIdAndCategoryId")
+    @PostMapping("/queryByBrandIdByPage")
     @ResponseBody
-    public ReturnObject queryByBrandIdAndCategoryId(Integer brandId, Integer categoryId) {
+    public ReturnPageObject<CommodityDTO> queryByBrandIdByPage(@RequestBody QueryByBrandIdByPageDTO dto) {
+        if (dto == null || dto.getBrandId() == null) {
+            return new ReturnPageObject<>(ErrInfo.PARAMETER_ERROR);
+        }
         try {
-            final List<CommodityDTO> commodityDTOS = commodityService.queryByBrandIdAndCategoryId(brandId, categoryId);
-            return new ReturnObject(true, commodityDTOS, 0);
+            return new ReturnPageObject<>(true, commodityService.
+                    queryByBrandIdByPage(dto.getBrandId(), dto.getPageNo(), dto.getPageSize()), 0);
         } catch (BizException e) {
-            return new ReturnObject(e);
+            return new ReturnPageObject<>(e);
+        }
+    }
+
+    @PostMapping("/queryByBrandIdAndCategoryIdByPage")
+    @ResponseBody
+    public ReturnPageObject<CommodityDTO> queryByBrandIdAndCategoryIdByPage(@RequestBody QueryByBrandIdAndCategoryIdDTO dto) {
+        if (dto == null || dto.getBrandId() == null || dto.getCategoryId() == null || dto.hasNull()) {
+            return new ReturnPageObject<>(ErrInfo.PARAMETER_ERROR);
+        }
+        try {
+            final PageBean<CommodityDTO> commodityDTOPageBean = commodityService.
+                    queryByBrandIdAndCategoryIdByPage(dto.getBrandId(), dto.getCategoryId(),
+                            dto.getPageNo(), dto.getPageSize());
+            return new ReturnPageObject<>(true, commodityDTOPageBean, 0);
+        } catch (BizException e) {
+            return new ReturnPageObject<>(e);
         }
     }
 

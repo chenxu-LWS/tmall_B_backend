@@ -19,30 +19,50 @@
         select * from commodity where id = #{id}
     </select>
 
-    <select id="queryCommodityByBrandId" resultMap="commodityMap">
-        select * from commodity where brand_id = #{brandID}
+    <select id="queryCommodityByBrandIdByPage" resultMap="commodityMap">
+        select * from commodity where brand_id = #{brandId} limit #{offset}, #{pageSize}
+    </select>
+    <select id="queryCommodityByBrandIdTotalNum" resultType="java.lang.Integer">
+        select count(*) from commodity where brand_id = #{brandId}
     </select>
 
     <select id="queryCommodityPropsById" resultType="java.lang.String">
         select other_prop from commodity where id = #{id}
     </select>
 
-    <select id="queryCommodityListByStatus" resultMap="commodityMap">
-        select * from commodity where status = #{status}
+    <select id="queryCommodityListByStatusByPage" resultMap="commodityMap">
+        select * from commodity where status = #{status} limit #{offset}, #{pageSize}
+    </select>
+    <select id="queryCommodityListByStatusTotalNum" resultType="java.lang.Integer">
+        select count(*) from commodity where status = #{status}
     </select>
 
-    <select id="batchQueryCommodityByCategoryId" resultMap="commodityMap" parameterType="list">
+    <select id="batchQueryCommodityByCategoryIdByPage" resultMap="commodityMap" parameterType="list">
         select * from commodity where category_id in 
+        <foreach collection="list" item="categories" open="(" separator="," close=")">
+            #{categories}
+        </foreach>
+        limit #{offset}, #{pageSize}
+    </select>
+    <select id="batchQueryCommodityByCategoryIdTotalNum" resultType="java.lang.Integer">
+        select count(*) from commodity where category_id in
         <foreach collection="list" item="categories" open="(" separator="," close=")">
             #{categories}
         </foreach>
     </select>
 
-    <select id="queryCommodityByCategoryIdAndBrandId" resultMap="commodityMap" parameterType="list">
+    <select id="queryCommodityByCategoryIdAndBrandIdByPage" resultMap="commodityMap" parameterType="list">
         select * from commodity where category_id in
             <foreach collection="list" item="categories" open="(" separator="," close=")">
                 #{categories}
             </foreach>
+        and brand_id = #{branchId} limit #{offset}, #{pageSize};
+    </select>
+    <select id="queryCommodityByCategoryIdAndBrandIdTotalNum" resultType="java.lang.Integer">
+        select count(*) from commodity where category_id in
+        <foreach collection="list" item="categories" open="(" separator="," close=")">
+            #{categories}
+        </foreach>
         and brand_id = #{branchId};
     </select>
 

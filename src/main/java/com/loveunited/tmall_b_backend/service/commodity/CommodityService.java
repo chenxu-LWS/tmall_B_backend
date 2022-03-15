@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
+import com.loveunited.tmall_b_backend.common.page.PageBean;
 import com.loveunited.tmall_b_backend.entity.Category;
 import com.loveunited.tmall_b_backend.entity.Commodity;
 import com.loveunited.tmall_b_backend.mapper.BrandMapper;
@@ -77,10 +78,15 @@ public class CommodityService {
      * 根据状态查询某些商品
      * @return
      */
-    public List<CommodityDTO> queryCommodityListByStatus(Integer status) {
-        List<CommodityDTO> result = new ArrayList<>();
-        final List<Commodity> commodities = commodityMapper.queryCommodityListByStatus(status);
-        return getCommodityDTOList(result, commodities);
+    public PageBean<CommodityDTO> queryCommodityListByStatusByPage(Integer status, Integer pageNo, Integer pageSize) {
+        final List<Commodity> commodities = commodityMapper
+                .queryCommodityListByStatusByPage(status, pageNo * pageSize, pageSize);
+        PageBean<CommodityDTO> result = new PageBean<>();
+        result.setList(getCommodityDTOList(new ArrayList<>(), commodities));
+        result.setPageSize(pageSize);
+        result.setPageNo(pageNo);
+        result.setTotalNum(commodityMapper.queryCommodityListByStatusTotalNum(status));
+        return result;
     }
 
     private List<CommodityDTO> getCommodityDTOList(List<CommodityDTO> result, List<Commodity> commodities) {
@@ -114,7 +120,7 @@ public class CommodityService {
      * @param categoryId
      * @return
      */
-    public List<CommodityDTO> queryByCategoryId(Integer categoryId) throws BizException{
+    public PageBean<CommodityDTO> queryByCategoryId(Integer categoryId, Integer pageNo, Integer pageSize) throws BizException{
         // 参数校验
         if (categoryMapper.queryCategoryById(categoryId) == null) {
             throw new BizException(ErrInfo.CATEGORY_ID_NOT_EXISTS);
@@ -132,8 +138,14 @@ public class CommodityService {
             }
         }
         // 查询所有子类别的商品
-        final List<Commodity> commodities = commodityMapper.batchQueryCommodityByCategoryId(categories);
-        return getCommodityDTOList(new ArrayList<>(), commodities);
+        final List<Commodity> commodities = commodityMapper
+                .batchQueryCommodityByCategoryIdByPage(categories, pageNo * pageSize, pageSize);
+        PageBean<CommodityDTO> result = new PageBean<>();
+        result.setList(getCommodityDTOList(new ArrayList<>(), commodities));
+        result.setPageNo(pageNo);
+        result.setPageSize(pageSize);
+        result.setTotalNum(commodityMapper.batchQueryCommodityByCategoryIdTotalNum(categories));
+        return result;
     }
 
     /**
@@ -142,12 +154,17 @@ public class CommodityService {
      * @return
      * @throws BizException
      */
-    public List<CommodityDTO> queryByBrandId(Integer brandId) throws BizException {
+    public PageBean<CommodityDTO> queryByBrandIdByPage(Integer brandId, Integer pageNo, Integer pageSize) throws BizException {
         if (brandMapper.queryBrandById(brandId) == null) {
             throw new BizException(ErrInfo.BRAND_ID_NOT_EXISTS);
         }
-        final List<Commodity> commodities = commodityMapper.queryCommodityByBrandId(brandId);
-        return getCommodityDTOList(new ArrayList<>(), commodities);
+        PageBean<CommodityDTO> result = new PageBean<>();
+        result.setPageNo(pageNo);
+        result.setPageSize(pageSize);
+        result.setTotalNum(commodityMapper.queryCommodityByBrandIdTotalNum(brandId));
+        final List<Commodity> commodities = commodityMapper.queryCommodityByBrandIdByPage(brandId, pageNo * pageSize, pageSize);
+        result.setList(getCommodityDTOList(new ArrayList<>(), commodities));
+        return result;
     }
 
     /**
@@ -157,8 +174,8 @@ public class CommodityService {
      * @return
      * @throws BizException
      */
-    public List<CommodityDTO> queryByBrandIdAndCategoryId(Integer brandId,
-            Integer categoryId) throws BizException {
+    public PageBean<CommodityDTO> queryByBrandIdAndCategoryIdByPage(Integer brandId,
+            Integer categoryId, Integer pageNo, Integer pageSize) throws BizException {
         if (categoryMapper.queryCategoryById(categoryId) == null) {
             throw new BizException(ErrInfo.CATEGORY_ID_NOT_EXISTS);
         }
@@ -177,8 +194,14 @@ public class CommodityService {
                 temp.add(sub.getId());
             }
         }
-        final List<Commodity> commodities = commodityMapper.queryCommodityByCategoryIdAndBrandId(categories, brandId);
-        return getCommodityDTOList(new ArrayList<>(), commodities);
+        final List<Commodity> commodities = commodityMapper
+                .queryCommodityByCategoryIdAndBrandIdByPage(categories, brandId, pageNo * pageSize, pageSize);
+        PageBean<CommodityDTO> result = new PageBean<>();
+        result.setList(getCommodityDTOList(new ArrayList<>(), commodities));
+        result.setPageNo(pageNo);
+        result.setPageSize(pageSize);
+        result.setTotalNum(commodityMapper.queryCommodityByCategoryIdAndBrandIdTotalNum(categories, brandId));
+        return result;
     }
 
     /**

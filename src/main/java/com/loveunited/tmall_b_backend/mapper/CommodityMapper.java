@@ -16,11 +16,26 @@ import com.loveunited.tmall_b_backend.entity.Commodity;
 @Component
 public interface CommodityMapper {
     public Commodity queryCommodityById(Integer id);
-    public List<Commodity> queryCommodityByBrandId(Integer brandID);
+    // 品牌ID筛选
+    public List<Commodity> queryCommodityByBrandIdByPage(@Param("brandId") Integer brandId,
+            @Param("offset") Integer offset, @Param("pageSize") Integer pageSize);
+    public Integer queryCommodityByBrandIdTotalNum(Integer brandId);
+
     public String queryCommodityPropsById(Integer id);
-    public List<Commodity> queryCommodityListByStatus(Integer status);
-    public List<Commodity> batchQueryCommodityByCategoryId(List<Integer> categories);
-    public List<Commodity> queryCommodityByCategoryIdAndBrandId(@Param("list") List<Integer> categories, @Param("branchId") Integer brandId);
+    // 状态筛选
+    public List<Commodity> queryCommodityListByStatusByPage(@Param("status") Integer status,
+            @Param("offset") Integer offset, @Param("pageSize") Integer pageSize);
+    public Integer queryCommodityListByStatusTotalNum(Integer status);
+    // 品类ID筛选
+    public List<Commodity> batchQueryCommodityByCategoryIdByPage(@Param("list") List<Integer> categories,
+            @Param("offset") Integer offset, @Param("pageSize") Integer pageSize);
+    public Integer batchQueryCommodityByCategoryIdTotalNum(List<Integer> categories);
+    // 品类ID&品牌ID筛选
+    public List<Commodity> queryCommodityByCategoryIdAndBrandIdByPage
+            (@Param("list") List<Integer> categories, @Param("branchId") Integer brandId,
+                    @Param("offset") Integer offset, @Param("pageSize") Integer pageSize);
+    public Integer queryCommodityByCategoryIdAndBrandIdTotalNum(@Param("list") List<Integer> categories,
+            @Param("branchId") Integer brandId);
 
     public Integer insertCommodity(Commodity commodity);
     public Integer updateCommodityProperties(@Param("id") Integer id, @Param("props") String props);

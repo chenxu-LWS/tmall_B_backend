@@ -17,11 +17,11 @@ public class CommodityServiceTest {
 
     @Test
     public void testQueryByCategoryId() {
-        commodityService.queryByCategoryId(2);
+//        commodityService.queryByCategoryId(2);
     }
 
     @Test
     public void testQueryByBrandIdAndCategoryId() {
-        System.out.println(commodityService.queryByBrandIdAndCategoryId(3, 1));
+//        System.out.println(commodityService.queryByBrandIdAndCategoryIdByPage(3, 1));
     }
 }
