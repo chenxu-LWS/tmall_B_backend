@@ -3,6 +3,7 @@ package com.loveunited.tmall_b_backend.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import com.loveunited.tmall_b_backend.entity.OrderInfo;
@@ -15,7 +16,10 @@ import com.loveunited.tmall_b_backend.entity.OrderInfo;
 @Component
 public interface OrderInfoMapper {
     public OrderInfo queryOrderInfoById(Integer id);
-    public List<OrderInfo> queryOrderInfoByCustomerName(String customerName);
+    public List<OrderInfo> queryOrderInfoByCustomerNameByPage(
+            @Param("customerName") String customerName,
+            @Param("offset") Integer offset, @Param("pageSize") Integer pageSize);
+    public Integer queryOrderInfoByCustomerNameTotalNum(String customerName);
 
     public Integer insertOrderInfo(OrderInfo orderInfo);
     public Integer updateCommodityStatusInOrderInfo(OrderInfo orderInfo);

@@ -1,20 +1,22 @@
 package com.loveunited.tmall_b_backend.controller.order_info;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.loveunited.tmall_b_backend.common.ReturnListObject;
 import com.loveunited.tmall_b_backend.common.ReturnObject;
+import com.loveunited.tmall_b_backend.common.ReturnPageObject;
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
+import com.loveunited.tmall_b_backend.common.page.PageBean;
 import com.loveunited.tmall_b_backend.controller.order_info.dto.InsertOrderInfoDTO;
+import com.loveunited.tmall_b_backend.controller.order_info.dto.QueryOrderInfoByCustomerNameByPageDTO;
 import com.loveunited.tmall_b_backend.service.commodity.CommodityService;
 import com.loveunited.tmall_b_backend.service.order_info.OrderInfoService;
 import com.loveunited.tmall_b_backend.service.order_info.dto.OrderInfoDTO;
@@ -42,11 +44,15 @@ public class OrderInfoController {
         }
     }
 
-    @RequestMapping("/queryByCustomerName")
+    @PostMapping("/queryByCustomerNameByPage")
     @ResponseBody
-    public ReturnListObject queryOrderInfoByCustomerName(String customerName) {
-        return new ReturnListObject(true,
-                new ArrayList<>(orderInfoService.queryOrderInfoByCustomerName(customerName)), 0);
+    public ReturnPageObject<OrderInfoDTO> queryOrderInfoByCustomerNameByPage(@RequestBody QueryOrderInfoByCustomerNameByPageDTO dto) {
+        if (dto.getCustomerName() == null || dto.hasNull()) {
+            return new ReturnPageObject<>(ErrInfo.PARAMETER_ERROR);
+        }
+        final PageBean<OrderInfoDTO> orderInfoDTOPageBean = orderInfoService
+                .queryOrderInfoByCustomerNameByPage(dto.getCustomerName(), dto.getPageNo(), dto.getPageSize());
+        return new ReturnPageObject<>(true, orderInfoDTOPageBean, 0);
     }
 
     @RequestMapping("/insert")

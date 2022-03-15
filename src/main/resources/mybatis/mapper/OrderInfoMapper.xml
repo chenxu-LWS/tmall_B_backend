@@ -15,8 +15,11 @@
         select * from orderinfo where id = #{id}
     </select>
 
-    <select id="queryOrderInfoByCustomerName" resultMap="orderInfoMap">
-        select * from orderinfo where customer_name = #{customerName}
+    <select id="queryOrderInfoByCustomerNameByPage" resultMap="orderInfoMap">
+        select * from orderinfo where customer_name = #{customerName} limit #{offset}, #{pageSize}
+    </select>
+    <select id="queryOrderInfoByCustomerNameTotalNum" resultType="java.lang.Integer">
+        select count(*) from orderinfo where customer_name = #{customerName}
     </select>
 
     <insert id="insertOrderInfo" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="OrderInfo">

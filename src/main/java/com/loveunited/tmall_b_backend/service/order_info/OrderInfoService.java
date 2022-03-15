@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
+import com.loveunited.tmall_b_backend.common.page.PageBean;
 import com.loveunited.tmall_b_backend.entity.OrderInfo;
 import com.loveunited.tmall_b_backend.mapper.OrderInfoMapper;
 import com.loveunited.tmall_b_backend.service.order_info.dto.OrderInfoDTO;
@@ -31,10 +32,16 @@ public class OrderInfoService {
         return new OrderInfoDTO(orderInfo);
     }
 
-    public List<OrderInfoDTO> queryOrderInfoByCustomerName(String customerName) {
-        final List<OrderInfo> orderInfos = orderInfoMapper.queryOrderInfoByCustomerName(customerName);
-        List<OrderInfoDTO> result = new ArrayList<>();
-        orderInfos.forEach(orderInfo -> result.add(new OrderInfoDTO(orderInfo)));
+    public PageBean<OrderInfoDTO> queryOrderInfoByCustomerNameByPage(String customerName, Integer pageNo, Integer pageSize) {
+        final List<OrderInfo> orderInfos =
+                orderInfoMapper.queryOrderInfoByCustomerNameByPage(customerName, pageNo * pageSize, pageSize);
+        List<OrderInfoDTO> dtos = new ArrayList<>();
+        orderInfos.forEach(orderInfo -> dtos.add(new OrderInfoDTO(orderInfo)));
+        PageBean<OrderInfoDTO> result = new PageBean<>();
+        result.setPageNo(pageNo);
+        result.setPageSize(pageSize);
+        result.setList(dtos);
+        result.setTotalNum(orderInfoMapper.queryOrderInfoByCustomerNameTotalNum(customerName));
         return result;
     }
 
