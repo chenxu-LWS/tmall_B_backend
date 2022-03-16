@@ -1,16 +1,21 @@
 package com.loveunited.tmall_b_backend.controller.commodity;
 
+import java.io.ByteArrayInputStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.aliyun.oss.OSSException;
 import com.loveunited.tmall_b_backend.common.ReturnObject;
 import com.loveunited.tmall_b_backend.common.ReturnPageObject;
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
+import com.loveunited.tmall_b_backend.common.oss.OssClient;
 import com.loveunited.tmall_b_backend.common.page.PageBean;
 import com.loveunited.tmall_b_backend.controller.commodity.dto.InsertCommodityDTO;
 import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryByBrandIdAndCategoryIdDTO;
@@ -18,6 +23,7 @@ import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryByBrandIdByP
 import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryByCategoryIdByPageDTO;
 import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryByStatusByPageDTO;
 import com.loveunited.tmall_b_backend.controller.commodity.dto.UpdateCommodityPropDTO;
+import com.loveunited.tmall_b_backend.entity.CommodityPicture;
 import com.loveunited.tmall_b_backend.service.category.CategoryService;
 import com.loveunited.tmall_b_backend.service.commodity.CommodityService;
 import com.loveunited.tmall_b_backend.service.commodity.dto.CommodityDTO;
@@ -36,9 +42,15 @@ public class CommodityController {
     CommodityPictureService pictureService;
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    OssClient ossClient;
+
+    private static final String MAIN_BUCKET_NAME = "tmall-commodity-pictures";
+    private static final String DETAIL_BUCKET_NAME = "tmall-commodity-details-pictures";
 
     @RequestMapping("/insert")
     @ResponseBody
+    @Transactional(rollbackFor=Exception.class)
     public ReturnObject insert(@RequestBody InsertCommodityDTO dto) {
         // 参数校验
         if (dto == null || dto.getPrice() == null || dto.getDetail() == null
@@ -52,10 +64,39 @@ public class CommodityController {
             // 记录在商品表
             Integer result = commodityService.insert(dto.getCategoryID(), dto.getName(), dto.getBrandID(),
                     dto.getPrice(), dto.getProps(), dto.getDetail());
-            // TODO: 图片记录在图片表
+            // 图片Base64编码放到oss
+            for (int i = 0; i < dto.getMainPicBase64().size(); i++) {
+                String mainObjectName = "commodity-" + result + "-main-" + (i + 1) + ".txt";
+                String content = dto.getMainPicBase64().get(i);
+                pictureService.insertPic(new CommodityPicture(null, result, 0, (i+1), mainObjectName));
+                ossClient.getOssClient().putObject(MAIN_BUCKET_NAME, mainObjectName,
+                        new ByteArrayInputStream(content.getBytes()));
+            }
+
+            for (int i = 0; i < dto.getDetailPicBase64().size(); i++) {
+                String detailObjectName = "commodity-" + result + "-detail-" + (i + 1) + ".txt";
+                String content = dto.getDetailPicBase64().get(i);
+                pictureService.insertPic(new CommodityPicture(null, result, 1, (i+1), detailObjectName));
+                ossClient.getOssClient().putObject(DETAIL_BUCKET_NAME, detailObjectName,
+                        new ByteArrayInputStream(content.getBytes()));
+            }
             return new ReturnObject(true, result, 0);
         } catch (BizException e) {
             return new ReturnObject(e);
+        } catch (OSSException oe) {
+            System.out.println("Caught an OSSException, which means your request made it to OSS, "
+                    + "but was rejected with an error response for some reason.");
+            System.out.println("Error Message:" + oe.getErrorMessage());
+            System.out.println("Error Code:" + oe.getErrorCode());
+            System.out.println("Request ID:" + oe.getRequestId());
+            System.out.println("Host ID:" + oe.getHostId());
+            return new ReturnObject(ErrInfo.OSS_ERROR);
+        } catch (Throwable ce) {
+            System.out.println("Caught an ClientException, which means the client encountered "
+                    + "a serious internal problem while trying to communicate with OSS, "
+                    + "such as not being able to access the network.");
+            System.out.println("Error Message:" + ce.getMessage());
+            return new ReturnObject(ErrInfo.OSS_ERROR);
         }
     }
 

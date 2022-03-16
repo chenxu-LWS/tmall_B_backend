@@ -39,7 +39,8 @@ public enum ErrInfo {
 
     // 通用错误码
     PARAMETER_ERROR(10000, "参数不合法"),
-    PARAMETER_ERROR_CANNOT_CAST_TO_JSON(10001, "参数无法转换为json,请检查");
+    PARAMETER_ERROR_CANNOT_CAST_TO_JSON(10001, "参数无法转换为json,请检查"),
+    OSS_ERROR(10002, "oss对象存储出错");
 
     Integer code;
     String message;

@@ -8,7 +8,7 @@
         <result column="commodity_id" property="commodityID"/>
         <result column="picture_type" property="pictureType"/>
         <result column="picture_sequence" property="pictureSequence"/>
-        <result column="picture_URL" property="pictureURL"/>
+        <result column="picture_obj" property="pictureObj"/>
     </resultMap>
 
     <select id="queryMainPicByCommodityId" resultMap="commodityPicMap">
@@ -24,7 +24,7 @@
     </select>
 
     <insert id="insertPic" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="CommodityPicture">
-        insert into commodity_picture (commodity_id, picture_type, picture_sequence, picture_URL)
-        values (#{commodityId}, #{pictureType}, (select max(picture_sequence) from commodity_picture where id = #{commodityId}) + 1, #{pictureURL})
+        insert into commodity_picture (commodity_id, picture_type, picture_sequence, picture_obj)
+        values (#{commodityID}, #{pictureType}, #{pictureSequence}, #{pictureObj})
     </insert>
 </mapper>
