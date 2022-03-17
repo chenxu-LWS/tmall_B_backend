@@ -36,6 +36,9 @@ public interface CommodityMapper {
                     @Param("offset") Integer offset, @Param("pageSize") Integer pageSize);
     public Integer queryCommodityByCategoryIdAndBrandIdTotalNum(@Param("list") List<Integer> categories,
             @Param("branchId") Integer brandId);
+    // 查询所有
+    public List<Commodity> queryAllByPage(@Param("offset") Integer offset, @Param("pageSize") Integer pageSize);
+    public Integer queryAllTotalNum();
 
     public Integer insertCommodity(Commodity commodity);
     public Integer updateCommodityProperties(@Param("id") Integer id, @Param("props") String props);
