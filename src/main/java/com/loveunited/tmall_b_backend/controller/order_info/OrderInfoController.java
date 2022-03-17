@@ -72,7 +72,7 @@ public class OrderInfoController {
                     throw new BizException(ErrInfo.ORDERINFO_DETAIL_FORMAT_ERROR);
                 }
                 Map<String, Object> objV = (Map<String, Object>) v;
-                if(!objV.containsKey("number") || !objV.containsKey("price")) {
+                if(objV.size() != 2 || !objV.containsKey("number") || !objV.containsKey("price")) {
                     throw new BizException(ErrInfo.ORDERINFO_DETAIL_FORMAT_ERROR);
                 }
                 // 默认状态为进行中(1)
