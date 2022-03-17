@@ -4,6 +4,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,8 @@ import com.loveunited.tmall_b_backend.service.login.LoginService;
  */
 @Controller
 public class LoginController {
+
+    Logger logger = Logger.getLogger(LoginController.class);
 
     private static final Integer COOKIE_TIME_OUT = 24 * 60 * 60;
     private static final String COOKIE_KEY = "current_user_cookie";
@@ -77,7 +80,7 @@ public class LoginController {
         // 删除cookie
         Cookie[] cookies = req.getCookies();
         if (null==cookies) {
-            System.out.println("cookie删除失效");
+            logger.error("cookie删除失效");
         } else {
             for(Cookie cookie : cookies){
                 //如果找到同名cookie，就将value设置为null，将存活时间设置为0，再替换掉原cookie，这样就相当于删除了。
