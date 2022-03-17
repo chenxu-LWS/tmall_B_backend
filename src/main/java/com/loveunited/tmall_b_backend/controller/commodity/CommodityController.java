@@ -129,8 +129,11 @@ public class CommodityController {
     @PostMapping("/queryByCategoryIdByPage")
     @ResponseBody
     public ReturnPageObject<CommodityDTO> queryByCategoryIdByPage(@RequestBody QueryByCategoryIdByPageDTO dto) {
-        if (dto == null || dto.getCategoryId() == null ||dto.getCategoryId() <=0) {
+        if (dto == null || dto.getCategoryId() == null ||dto.getCategoryId() <0) {
             return new ReturnPageObject<>(ErrInfo.PARAMETER_ERROR);
+        }
+        if (dto.getCategoryId() == 0) {
+            return new ReturnPageObject<>(true, commodityService.queryAllByPage(dto.getPageNo(), dto.getPageSize()), 0);
         }
         try {
             final PageBean<CommodityDTO> commodityDTOPageBean = commodityService.queryByCategoryId(dto.getCategoryId(),

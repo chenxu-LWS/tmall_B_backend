@@ -66,6 +66,13 @@
         and brand_id = #{branchId};
     </select>
 
+    <select id="queryAllByPage" resultMap="Commodity">
+        select * from commodity limit #{offset}, #{pageSize}
+    </select>
+    <select id="queryAllTotalNum" resultType="java.lang.Integer">
+        select count(*) from commodity
+    </select>
+
     <insert id="insertCommodity" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Commodity">
         insert into commodity (commodity_name, category_id, brand_id, commodity_price, other_prop, detail)
         values (#{name}, #{categoryID}, #{brandID}, #{price}, #{props}, #{detail})

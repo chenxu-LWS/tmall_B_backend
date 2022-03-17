@@ -205,6 +205,22 @@ public class CommodityService {
     }
 
     /**
+     * 分页查询所有的商品
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    public PageBean<CommodityDTO> queryAllByPage(Integer pageNo, Integer pageSize) {
+        final List<Commodity> commodities = commodityMapper.queryAllByPage(pageNo * pageSize, pageSize);
+        PageBean<CommodityDTO> result = new PageBean<>();
+        result.setPageNo(pageNo);
+        result.setPageSize(pageSize);
+        result.setTotalNum(commodityMapper.queryAllTotalNum());
+        result.setList(getCommodityDTOList(new ArrayList<>(), commodities));
+        return result;
+    }
+
+    /**
      * 将商品上架
      * @param id
      * @return
