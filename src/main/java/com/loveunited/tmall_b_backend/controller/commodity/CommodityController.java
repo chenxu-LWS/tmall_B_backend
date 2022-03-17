@@ -2,6 +2,7 @@ package com.loveunited.tmall_b_backend.controller.commodity;
 
 import java.io.ByteArrayInputStream;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,9 @@ import com.loveunited.tmall_b_backend.service.commodity_picture.CommodityPicture
 @Controller
 @RequestMapping("/api/commodity")
 public class CommodityController {
+
+    Logger logger = Logger.getLogger(CommodityController.class);
+
     @Autowired
     CommodityService commodityService;
     @Autowired
@@ -84,18 +88,18 @@ public class CommodityController {
         } catch (BizException e) {
             return new ReturnObject(e);
         } catch (OSSException oe) {
-            System.out.println("Caught an OSSException, which means your request made it to OSS, "
+            logger.info("Caught an OSSException, which means your request made it to OSS, "
                     + "but was rejected with an error response for some reason.");
-            System.out.println("Error Message:" + oe.getErrorMessage());
-            System.out.println("Error Code:" + oe.getErrorCode());
-            System.out.println("Request ID:" + oe.getRequestId());
-            System.out.println("Host ID:" + oe.getHostId());
+            logger.info("Error Message:" + oe.getErrorMessage());
+            logger.info("Error Code:" + oe.getErrorCode());
+            logger.info("Request ID:" + oe.getRequestId());
+            logger.info("Host ID:" + oe.getHostId());
             return new ReturnObject(ErrInfo.OSS_ERROR);
         } catch (Throwable ce) {
-            System.out.println("Caught an ClientException, which means the client encountered "
+            logger.info("Caught an ClientException, which means the client encountered "
                     + "a serious internal problem while trying to communicate with OSS, "
                     + "such as not being able to access the network.");
-            System.out.println("Error Message:" + ce.getMessage());
+            logger.info("Error Message:" + ce.getMessage());
             return new ReturnObject(ErrInfo.OSS_ERROR);
         }
     }

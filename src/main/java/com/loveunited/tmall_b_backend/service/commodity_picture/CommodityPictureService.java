@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ import com.loveunited.tmall_b_backend.mapper.CommodityPictureMapper;
  */
 @Service
 public class CommodityPictureService {
+    Logger logger = Logger.getLogger(CommodityPictureService.class);
     @Autowired
     CommodityPictureMapper pictureMapper;
     @Autowired
@@ -64,18 +66,18 @@ public class CommodityPictureService {
             }
             return pictures;
         } catch (OSSException oe) {
-            System.out.println("Caught an OSSException, which means your request made it to OSS, "
+            logger.error("Caught an OSSException, which means your request made it to OSS, "
                     + "but was rejected with an error response for some reason.");
-            System.out.println("Error Message:" + oe.getErrorMessage());
-            System.out.println("Error Code:" + oe.getErrorCode());
-            System.out.println("Request ID:" + oe.getRequestId());
-            System.out.println("Host ID:" + oe.getHostId());
+            logger.error("Error Message:" + oe.getErrorMessage());
+            logger.error("Error Code:" + oe.getErrorCode());
+            logger.error("Request ID:" + oe.getRequestId());
+            logger.error("Host ID:" + oe.getHostId());
             throw new BizException(ErrInfo.OSS_ERROR);
         } catch (Throwable ce) {
-            System.out.println("Caught an ClientException, which means the client encountered "
+            logger.error("Caught an ClientException, which means the client encountered "
                     + "a serious internal problem while trying to communicate with OSS, "
                     + "such as not being able to access the network.");
-            System.out.println("Error Message:" + ce.getMessage());
+            logger.error("Error Message:" + ce.getMessage());
             throw new BizException(ErrInfo.OSS_ERROR);
         }
     }
@@ -104,18 +106,18 @@ public class CommodityPictureService {
             }
             return pictures;
         }catch (OSSException oe) {
-            System.out.println("Caught an OSSException, which means your request made it to OSS, "
+            logger.error("Caught an OSSException, which means your request made it to OSS, "
                     + "but was rejected with an error response for some reason.");
-            System.out.println("Error Message:" + oe.getErrorMessage());
-            System.out.println("Error Code:" + oe.getErrorCode());
-            System.out.println("Request ID:" + oe.getRequestId());
-            System.out.println("Host ID:" + oe.getHostId());
+            logger.error("Error Message:" + oe.getErrorMessage());
+            logger.error("Error Code:" + oe.getErrorCode());
+            logger.error("Request ID:" + oe.getRequestId());
+            logger.error("Host ID:" + oe.getHostId());
             throw new BizException(ErrInfo.OSS_ERROR);
         } catch (Throwable ce) {
-            System.out.println("Caught an ClientException, which means the client encountered "
+            logger.error("Caught an ClientException, which means the client encountered "
                     + "a serious internal problem while trying to communicate with OSS, "
                     + "such as not being able to access the network.");
-            System.out.println("Error Message:" + ce.getMessage());
+            logger.error("Error Message:" + ce.getMessage());
             throw new BizException(ErrInfo.OSS_ERROR);
         }
     }

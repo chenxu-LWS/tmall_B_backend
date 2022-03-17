@@ -40,7 +40,6 @@ public class StockDetailService {
     public PageBean<StockDetailDTO> queryStockDetailAllByPage(Integer pageNo, Integer pageSize) {
         final List<StockDetail> stockDetails
                 = stockDetailMapper.queryStockDetailAllByPage(pageNo * pageSize, pageSize);
-        System.out.println(stockDetails);
         List<StockDetailDTO> stockDetailDTOS = new ArrayList<>();
         for (StockDetail stockDetail : stockDetails) {
             StockDetailDTO dto = new StockDetailDTO(stockDetail);
