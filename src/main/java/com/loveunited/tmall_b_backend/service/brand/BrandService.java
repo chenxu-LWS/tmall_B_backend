@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
 import com.loveunited.tmall_b_backend.entity.Brand;
+import com.loveunited.tmall_b_backend.entity.Commodity;
 import com.loveunited.tmall_b_backend.mapper.BrandMapper;
+import com.loveunited.tmall_b_backend.mapper.CommodityMapper;
 
 /**
  * @author LiuWenshuo
@@ -18,6 +20,8 @@ import com.loveunited.tmall_b_backend.mapper.BrandMapper;
 public class BrandService {
     @Autowired
     BrandMapper brandMapper;
+    @Autowired
+    CommodityMapper commodityMapper;
 
     public Brand queryBrandById(Integer id) {
         return brandMapper.queryBrandById(id);
@@ -38,6 +42,10 @@ public class BrandService {
     public Integer deleteBrandById(Integer id) throws BizException{
         if (brandMapper.queryBrandById(id) == null) {
             throw new BizException(ErrInfo.BRAND_ID_NOT_EXISTS);
+        }
+        final List<Commodity> commodities = commodityMapper.queryCommodityByBrandIdByPage(id, 0, 10);
+        if (commodities!= null && !commodities.isEmpty()) {
+            throw new BizException(ErrInfo.DELETE_BRAND_ERROR_COMMODITY_BIND);
         }
         return brandMapper.deleteBrandById(id);
     }

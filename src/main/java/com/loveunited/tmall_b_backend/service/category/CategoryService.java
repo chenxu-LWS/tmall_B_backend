@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
-import com.loveunited.tmall_b_backend.entity.Category;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
+import com.loveunited.tmall_b_backend.common.page.PageBean;
+import com.loveunited.tmall_b_backend.entity.Category;
 import com.loveunited.tmall_b_backend.mapper.CategoryMapper;
 import com.loveunited.tmall_b_backend.service.category.dto.CategoryDTO;
+import com.loveunited.tmall_b_backend.service.commodity.CommodityService;
+import com.loveunited.tmall_b_backend.service.commodity.dto.CommodityDTO;
 
 /**
  * @author LiuWenshuo
@@ -20,6 +23,8 @@ import com.loveunited.tmall_b_backend.service.category.dto.CategoryDTO;
 public class CategoryService {
     @Autowired
     CategoryMapper categoryMapper;
+    @Autowired
+    CommodityService commodityService;
 
     /**
      * 递归查询整个品类的分层结构
@@ -123,6 +128,11 @@ public class CategoryService {
         final List<Category> categories = categoryMapper.querySubCategoryById(id);
         if (categories!=null && !categories.isEmpty()) {
             throw new BizException(ErrInfo.DELETE_CATEGORY_FAILED);
+        }
+        final PageBean<CommodityDTO> commodityDTOPageBean =
+                commodityService.queryByCategoryId(id, 0, 2);
+        if (commodityDTOPageBean.getTotalNum() != 0) {
+            throw new BizException(ErrInfo.DELETE_CATEGORY_FAILED_COMMODITY_BIND);
         }
         return categoryMapper.deleteCategory(id);
     }
