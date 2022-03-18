@@ -43,7 +43,7 @@ public class LoginFilter implements Filter {
             if(cs != null && cs.length > 0) {
                 for(Cookie c : cs) {
                     if(COOKIE_KEY.equals(c.getName())) {
-                        req.getSession().setAttribute("user", c.getValue());
+                        req.getSession().setAttribute(SESSION_KEY, c.getValue());
                         isLogin = true;
                         chain.doFilter(request, response);
                     }
