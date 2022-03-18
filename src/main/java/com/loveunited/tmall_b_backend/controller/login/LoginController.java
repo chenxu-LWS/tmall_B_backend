@@ -104,8 +104,29 @@ public class LoginController {
     @RequestMapping("/api/isLogin")
     @ResponseBody
     public ReturnObject isLogin(HttpServletRequest req) {
+        logger.info("调用isLogin");
         final IsLoginDTO isLoginDTO = new IsLoginDTO();
-        if (req.getSession().getAttribute(SESSION_KEY) != null) {
+        if (req.getSession().getAttribute(SESSION_KEY) != null) {// 查询session，如果已经登录了直接返回
+            isLoginDTO.setIsLogin(true);
+            isLoginDTO.setUserName((String) req.getSession().getAttribute(SESSION_KEY));
+            return new ReturnObject(true, isLoginDTO, 0);
+        }
+        // 查询cookie
+        boolean isLogin = false;
+        Cookie[] cs =  req.getCookies();
+        if(cs != null && cs.length > 0) {
+            for(Cookie c : cs) {
+                if(COOKIE_KEY.equals(c.getName())) {
+                    logger.info("COOKIE中的key: " + c.getName());
+                    logger.info("COOKIE中的value: " + c.getValue());
+                    req.getSession().setAttribute(SESSION_KEY, c.getValue());
+                    isLogin = true;
+                }
+            }
+        }
+        logger.info("当前请求sessionID: " + req.getRequestedSessionId());
+        logger.info("当前请求的session的userName更新为: " + req.getSession().getAttribute(SESSION_KEY));
+        if (isLogin) {
             isLoginDTO.setIsLogin(true);
             isLoginDTO.setUserName((String) req.getSession().getAttribute(SESSION_KEY));
         } else {
