@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.loveunited.tmall_b_backend.common.ReturnObject;
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
+import com.loveunited.tmall_b_backend.controller.login.dto.IsLoginDTO;
 import com.loveunited.tmall_b_backend.controller.login.dto.UserDTO;
 import com.loveunited.tmall_b_backend.service.login.LoginService;
 
@@ -29,6 +30,8 @@ public class LoginController {
 
     private static final Integer COOKIE_TIME_OUT = 24 * 60 * 60;
     private static final String COOKIE_KEY = "current_user_cookie";
+    private static final String SESSION_KEY = "current_user_session";
+
 
     @Autowired
     LoginService loginService;
@@ -61,6 +64,8 @@ public class LoginController {
             cookie.setMaxAge(COOKIE_TIME_OUT);
             cookie.setPath("/");
             resp.addCookie(cookie);
+            // 设置session
+            req.getSession().setAttribute(SESSION_KEY, dto.getName());
             return new ReturnObject(true, null, 0);
         } catch (BizException e) {
             return new ReturnObject(e);
@@ -94,5 +99,18 @@ public class LoginController {
             }
         }
         return new ReturnObject(true, null, 0);
+    }
+
+    @RequestMapping("/api/isLogin")
+    @ResponseBody
+    public ReturnObject isLogin(HttpServletRequest req) {
+        final IsLoginDTO isLoginDTO = new IsLoginDTO();
+        if (req.getSession().getAttribute(SESSION_KEY) != null) {
+            isLoginDTO.setIsLogin(true);
+            isLoginDTO.setUserName((String) req.getSession().getAttribute(SESSION_KEY));
+        } else {
+            isLoginDTO.setIsLogin(false);
+        }
+        return new ReturnObject(true, isLoginDTO, 0);
     }
 }
