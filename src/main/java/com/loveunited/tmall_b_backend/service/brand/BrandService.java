@@ -27,6 +27,10 @@ public class BrandService {
         return brandMapper.queryBrandById(id);
     }
 
+    public List<Brand> queryAll() {
+        return brandMapper.queryAllBrand();
+    }
+
     public Integer insertBrand(String name) throws BizException{
         final List<Brand> brands = brandMapper.queryAllBrand();
         for (Brand brand : brands) {

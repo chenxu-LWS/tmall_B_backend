@@ -33,7 +33,7 @@
     <insert id="insertCategory" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Category">
         insert into
             category (id, category_name, parent_category_ID, category_level, commodity_num)
-            values (null, #{name}, #{parentId}, #{level}, 0)
+            values (null, #{name}, #{parentCategoryID}, #{level}, 0)
     </insert>
 
     <insert id="deleteCategory">
