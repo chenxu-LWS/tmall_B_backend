@@ -3,6 +3,7 @@ package com.loveunited.tmall_b_backend.service.category;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,9 @@ import com.loveunited.tmall_b_backend.service.commodity.dto.CommodityDTO;
  */
 @Service
 public class CategoryService {
+
+    Logger logger = Logger.getLogger(CategoryService.class);
+
     @Autowired
     CategoryMapper categoryMapper;
     @Autowired
@@ -95,7 +99,9 @@ public class CategoryService {
     public Integer insertCategory(String name, Integer parentId) throws BizException{
         final List<Category> allCategory = categoryMapper.queryAllCategory();
         Integer maxLevel = 0;
+        logger.info("正在插入：" + name);
         for (Category category : allCategory) {
+            logger.info(category.getName());
             if (category.getName().equals(name)) {
                 throw new BizException(ErrInfo.INSERT_CATEGORY_NAME_EXISTS);
             }
