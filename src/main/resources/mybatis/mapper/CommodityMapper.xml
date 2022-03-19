@@ -13,6 +13,7 @@
         <result column="status" property="status"/>
         <result column="detail" property="detail"/>
         <result column="inventory" property="inventory"/>
+        <result column="sale_volume" property="saleVolume"/>
     </resultMap>
 
     <select id="queryCommodityById" resultMap="commodityMap">

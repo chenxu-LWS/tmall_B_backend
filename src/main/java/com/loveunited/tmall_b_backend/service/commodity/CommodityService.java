@@ -69,7 +69,7 @@ public class CommodityService {
             throw new BizException(ErrInfo.PARAMETER_ERROR_CANNOT_CAST_TO_JSON);
         }
         // 插入商品表,默认状态为已创建
-        Commodity commodity = new Commodity(null, name, categoryID, brandID, price, props, detail, null, null);
+        Commodity commodity = new Commodity(null, name, categoryID, brandID, price, props, detail, null, null, null);
         commodityMapper.insertCommodity(commodity);
         return commodity.getId();
     }
