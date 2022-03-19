@@ -138,24 +138,15 @@ public class CategoryService {
     }
 
     /**
-     * 给一个品类的商品数+1,这里做了CAS防并发
-     * @param id
-     * @return
-     */
-    public Integer increaseOrDecreaseCategoryCommodityNum(Integer id, Integer num) {
-        return categoryMapper.increaseOrDecreaseCategoryCommodityNum(id, num);
-    }
-
-    /**
-     * 上架/下架一个商品时，品类自底向上的商品数量都+1
+     * 上架/下架一个商品时，品类自底向上的商品数量都变化
      * @return
      */
     public Integer increaseOrDecreaseComNumToRoot(Integer id, Integer num) {
+        categoryMapper.increaseOrDecreaseCategoryCommodityNum(id, num);
         // 只要还没到根结点,就继续
         if (id == 0) {
             return 0;
         }
-        categoryMapper.increaseOrDecreaseCategoryCommodityNum(id, num);
-        return increaseOrDecreaseCategoryCommodityNum(categoryMapper.queryCategoryById(id).getParentCategoryID(), num);
+        return increaseOrDecreaseComNumToRoot(categoryMapper.queryCategoryById(id).getParentCategoryID(), num);
     }
 }
