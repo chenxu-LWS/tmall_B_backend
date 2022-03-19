@@ -1,10 +1,13 @@
 package com.loveunited.tmall_b_backend.controller.brand;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.loveunited.tmall_b_backend.common.ReturnListObject;
 import com.loveunited.tmall_b_backend.common.ReturnObject;
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
@@ -19,6 +22,12 @@ import com.loveunited.tmall_b_backend.service.brand.BrandService;
 public class BrandController {
     @Autowired
     BrandService brandService;
+
+    @RequestMapping("/queryAll")
+    @ResponseBody
+    public ReturnListObject queryAll() {
+        return new ReturnListObject(true, new ArrayList<>(brandService.queryAll()), 0);
+    }
 
     @RequestMapping("/queryById")
     @ResponseBody
