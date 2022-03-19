@@ -27,6 +27,7 @@ public class CommodityDTO {
     private Integer status;// 商品状态,已创建为(0)，已上架为1，已下架为2
     private String detail;// 商品描述
     private Integer inventory;// 库存
+    private Integer saleVolume;
 
     public CommodityDTO(Commodity commodity) {
         this.id = commodity.getId();
@@ -36,5 +37,6 @@ public class CommodityDTO {
         this.status = commodity.getStatus();
         this.inventory = commodity.getInventory();
         this.detail = commodity.getDetail();
+        this.saleVolume = commodity.getSaleVolume();
     }
 }
