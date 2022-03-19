@@ -23,6 +23,7 @@ import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryByBrandIdAnd
 import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryByBrandIdByPageDTO;
 import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryByCategoryIdByPageDTO;
 import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryByStatusByPageDTO;
+import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryCommodityByConditionDTO;
 import com.loveunited.tmall_b_backend.controller.commodity.dto.UpdateCommodityPropDTO;
 import com.loveunited.tmall_b_backend.entity.CommodityPicture;
 import com.loveunited.tmall_b_backend.service.category.CategoryService;
@@ -102,6 +103,16 @@ public class CommodityController {
             logger.info("Error Message:" + ce.getMessage());
             return new ReturnObject(ErrInfo.OSS_ERROR);
         }
+    }
+
+    @PostMapping("/queryCommodityByConditionByPage")
+    @ResponseBody
+    public ReturnPageObject<CommodityDTO> queryCommodityByConditionByPage(@RequestBody QueryCommodityByConditionDTO dto) {
+        final PageBean<CommodityDTO> commodityDTOPageBean = commodityService
+                .queryCommodityByConditionByPage(dto.getCategoryId(), dto.getBrandId(),
+                        dto.getPropK(), dto.getPropV(), dto.getPriceLow(), dto.getPriceHigh(),
+                        dto.getSortedBy(), dto.getSortDesc(), dto.getOnlyOnSale(), dto.getPageNo(), dto.getPageSize());
+        return new ReturnPageObject<>(true, commodityDTOPageBean, 0);
     }
 
     @PostMapping("/queryByStatusByPage")
