@@ -297,4 +297,36 @@ public class CommodityService {
         }
         return commodityMapper.increaseOrDecreaseInventory(id, num);
     }
+
+    public PageBean<CommodityDTO> queryCommodityByConditionByPage(Integer categoryId, Integer brandId, String propK,
+            String propV, Double priceLow, Double priceHigh, String sortedBy, Boolean sortDesc, Boolean onlyOnSale,
+            Integer pageNo, Integer pageSize) throws BizException {
+        // 先查询有没有子类别,放到一个list里，层序遍历图
+        List<Integer> categories = new ArrayList<>();
+        if (categoryId != null) {
+            Queue<Integer> temp = new LinkedBlockingDeque<>();
+            temp.add(categoryId);
+            while (!temp.isEmpty()) {
+                final Integer curr = temp.remove();
+                categories.add(curr);
+                final List<Category> subs = categoryMapper.querySubCategoryById(curr);
+                for (Category sub : subs) {
+                    temp.add(sub.getId());
+                }
+            }
+        }
+        // 查询主逻辑
+        final List<Commodity> commodities = commodityMapper.queryCommodityByConditionByPage(categories,
+                brandId,
+                propK, propV, priceLow, priceHigh, sortedBy, sortDesc, onlyOnSale, pageNo * pageSize, pageSize);
+        System.out.println(commodities);
+        PageBean<CommodityDTO> result = new PageBean<>();
+        result.setPageNo(pageNo);
+        result.setPageSize(pageSize);
+        result.setList(getCommodityDTOList(new ArrayList<>(), commodities));
+        result.setTotalNum(commodityMapper.queryCommodityByConditionTotalNum(categories, brandId,
+                priceLow, priceHigh,
+                propK, propV, onlyOnSale));
+        return result;
+    }
 }
