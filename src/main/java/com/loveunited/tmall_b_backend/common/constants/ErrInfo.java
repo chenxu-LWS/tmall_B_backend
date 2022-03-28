@@ -41,6 +41,7 @@ public enum ErrInfo {
 
     // 活动相关
     DSL_SYNTAX_ERROR(1019, "活动创建语句语法有误"),
+    CATEGORY_LEVEL_NOT_SUPPORTED(1020, "只能对三级品类进行活动发布"),
 
     // 通用错误码
     PARAMETER_ERROR(10000, "参数不合法"),

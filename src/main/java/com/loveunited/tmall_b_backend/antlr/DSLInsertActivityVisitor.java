@@ -19,6 +19,7 @@ import com.loveunited.tmall_b_backend.antlr.DSLParser.StartclauseContext;
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
 import com.loveunited.tmall_b_backend.entity.Activity;
+import com.loveunited.tmall_b_backend.entity.Category;
 import com.loveunited.tmall_b_backend.mapper.BrandMapper;
 import com.loveunited.tmall_b_backend.mapper.CategoryMapper;
 import com.loveunited.tmall_b_backend.mapper.CommodityMapper;
@@ -82,8 +83,11 @@ public class DSLInsertActivityVisitor extends DSLBaseVisitor{
                     break;
                 case "[品类ID]":
                     childNum = ctx.getChild(2);
-                    if (categoryMapper.queryCategoryById(Integer.valueOf(childNum.getText())) == null) {
+                    final Category category = categoryMapper.queryCategoryById(Integer.valueOf(childNum.getText()));
+                    if (category == null) {
                         throw new BizException(ErrInfo.CATEGORY_ID_NOT_EXISTS);
+                    } else if (category.getLevel() != 3) {
+                        throw new BizException(ErrInfo.CATEGORY_LEVEL_NOT_SUPPORTED);
                     }
                     break;
                 case "[品牌ID]":
