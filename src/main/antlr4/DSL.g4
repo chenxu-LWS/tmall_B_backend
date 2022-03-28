@@ -7,7 +7,7 @@ couponstatement: 'Coupon' INT condition startclause endclause;
 
 fullminusstatement: 'FullMinus' INT INT condition startclause endclause;
 
-discountstatement: 'Discount' DISCOUNT condition startclause endclause;
+discountstatement: 'Discount' INT condition startclause endclause;
 
 condition: condition '&&' condition
             | condition '||' condition
@@ -19,6 +19,5 @@ endclause: 'End' INT '-' INT '-' INT '-' INT ':' INT ':' INT;
 variable: '[商品ID]' | '[品类ID]' | '[品牌ID]';
 
 INT : ('0'..'9')+;
-DISCOUNT: '1'..'9';
 WS: [ \t\r\n]+ -> skip;
 NEWLINE:[\r\n]+ ;
