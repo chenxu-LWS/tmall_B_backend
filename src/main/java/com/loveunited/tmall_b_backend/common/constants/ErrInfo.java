@@ -39,6 +39,9 @@ public enum ErrInfo {
     // 退货单相关
     BACKORDERINFO_ID_NOT_EXISTS(1018, "退货单ID不存在"),
 
+    // 活动相关
+    DSL_SYNTAX_ERROR(1019, "活动创建语句语法有误"),
+
     // 通用错误码
     PARAMETER_ERROR(10000, "参数不合法"),
     PARAMETER_ERROR_CANNOT_CAST_TO_JSON(10001, "参数无法转换为json,请检查"),
