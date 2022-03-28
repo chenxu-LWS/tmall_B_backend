@@ -30,7 +30,7 @@ public class DSLParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		T__9=10, T__10=11, T__11=12, T__12=13, INT=14, DISCOUNT=15, WS=16, NEWLINE=17;
+		T__9=10, T__10=11, T__11=12, T__12=13, INT=14, WS=15, NEWLINE=16;
 	public static final int
 		RULE_init = 0, RULE_couponstatement = 1, RULE_fullminusstatement = 2, 
 		RULE_discountstatement = 3, RULE_condition = 4, RULE_startclause = 5, 
@@ -54,7 +54,7 @@ public class DSLParser extends Parser {
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, "INT", "DISCOUNT", "WS", "NEWLINE"
+			null, null, "INT", "WS", "NEWLINE"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -304,7 +304,7 @@ public class DSLParser extends Parser {
 	}
 
 	public static class DiscountstatementContext extends ParserRuleContext {
-		public TerminalNode DISCOUNT() { return getToken(DSLParser.DISCOUNT, 0); }
+		public TerminalNode INT() { return getToken(DSLParser.INT, 0); }
 		public ConditionContext condition() {
 			return getRuleContext(ConditionContext.class,0);
 		}
@@ -342,7 +342,7 @@ public class DSLParser extends Parser {
 			setState(34);
 			match(T__2);
 			setState(35);
-			match(DISCOUNT);
+			match(INT);
 			setState(36);
 			condition(0);
 			setState(37);
@@ -673,7 +673,7 @@ public class DSLParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\23W\4\2\t\2\4\3\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\22W\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\3\2\3\2\3\2\5\2\26"+
 		"\n\2\3\3\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3"+
 		"\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\7\6\66\n\6\f\6"+
@@ -684,7 +684,7 @@ public class DSLParser extends Parser {
 		"\2\23\26\5\6\4\2\24\26\5\b\5\2\25\22\3\2\2\2\25\23\3\2\2\2\25\24\3\2\2"+
 		"\2\26\3\3\2\2\2\27\30\7\3\2\2\30\31\7\20\2\2\31\32\5\n\6\2\32\33\5\f\7"+
 		"\2\33\34\5\16\b\2\34\5\3\2\2\2\35\36\7\4\2\2\36\37\7\20\2\2\37 \7\20\2"+
-		"\2 !\5\n\6\2!\"\5\f\7\2\"#\5\16\b\2#\7\3\2\2\2$%\7\5\2\2%&\7\21\2\2&\'"+
+		"\2 !\5\n\6\2!\"\5\f\7\2\"#\5\16\b\2#\7\3\2\2\2$%\7\5\2\2%&\7\20\2\2&\'"+
 		"\5\n\6\2\'(\5\f\7\2()\5\16\b\2)\t\3\2\2\2*+\b\6\1\2+,\5\20\t\2,-\7\b\2"+
 		"\2-.\7\20\2\2.\67\3\2\2\2/\60\f\5\2\2\60\61\7\6\2\2\61\66\5\n\6\6\62\63"+
 		"\f\4\2\2\63\64\7\7\2\2\64\66\5\n\6\5\65/\3\2\2\2\65\62\3\2\2\2\669\3\2"+

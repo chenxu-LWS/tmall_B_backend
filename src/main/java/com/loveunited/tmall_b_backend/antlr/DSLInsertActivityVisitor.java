@@ -32,7 +32,7 @@ import lombok.Data;
  */
 @Service
 @Data
-public class DSLInsertActivityVisitor extends DSLBaseVisitor{
+public class DSLInsertActivityVisitor extends DSLBaseVisitor {
     Activity activity;
     @Autowired
     CommodityMapper commodityMapper;

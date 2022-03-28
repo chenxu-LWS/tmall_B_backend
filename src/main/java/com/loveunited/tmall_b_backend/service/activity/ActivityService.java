@@ -58,7 +58,9 @@ public class ActivityService {
             ParseTree tree = parser.init();
             visitor.setActivity(activity);
             visitor.visit(tree);
+            System.out.println(activity);
         } catch (ParseCancellationException e) {
+            e.printStackTrace();
             throw new BizException(ErrInfo.DSL_SYNTAX_ERROR);
         }
     }
