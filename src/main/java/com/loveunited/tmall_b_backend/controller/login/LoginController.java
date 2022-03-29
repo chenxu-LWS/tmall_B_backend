@@ -1,5 +1,8 @@
 package com.loveunited.tmall_b_backend.controller.login;
 
+import static com.loveunited.tmall_b_backend.common.constants.Constants.COOKIE_KEY;
+import static com.loveunited.tmall_b_backend.common.constants.Constants.SESSION_KEY;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,8 +32,6 @@ public class LoginController {
     Logger logger = Logger.getLogger(LoginController.class);
 
     private static final Integer COOKIE_TIME_OUT = 24 * 60 * 60;
-    private static final String COOKIE_KEY = "current_user_cookie";
-    private static final String SESSION_KEY = "current_user_session";
 
 
     @Autowired
