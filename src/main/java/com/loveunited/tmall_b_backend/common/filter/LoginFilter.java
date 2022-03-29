@@ -1,6 +1,9 @@
 package com.loveunited.tmall_b_backend.common.filter;
 
 
+import static com.loveunited.tmall_b_backend.common.constants.Constants.COOKIE_KEY;
+import static com.loveunited.tmall_b_backend.common.constants.Constants.SESSION_KEY;
+
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -23,9 +26,6 @@ import org.apache.log4j.Logger;
 @WebFilter(urlPatterns = {"/*"})
 public class LoginFilter implements Filter {
     Logger logger = Logger.getLogger(LoginFilter.class);
-
-    private static final String SESSION_KEY = "current_user_session";
-    private static final String COOKIE_KEY = "current_user_cookie";
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
