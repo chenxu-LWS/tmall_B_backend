@@ -52,10 +52,13 @@ public class CommodityService {
      */
     public Integer insert(Integer categoryID, String name, Integer brandID, Double price,
             String props, String detail) throws BizException {
-        if (categoryMapper.queryCategoryById(categoryID) == null) {
+        final Category category = categoryMapper.queryCategoryById(categoryID);
+        if (category == null) {
             throw new BizException(ErrInfo.CATEGORY_ID_NOT_EXISTS);
         } else if (brandMapper.queryBrandById(brandID) == null) {
             throw new BizException(ErrInfo.BRAND_ID_NOT_EXISTS);
+        } else if(category.getLevel() != 3) {
+            throw new BizException(ErrInfo.COMMODITY_INSERT_NOT_AVAILABLE);
         }
         try {
             // 强转传入的props参数，校验合法性
@@ -328,5 +331,14 @@ public class CommodityService {
                 priceLow, priceHigh,
                 propK, propV, onlyOnSale));
         return result;
+    }
+
+    /**
+     * 根据不同level分类聚合，给出每种分类的总销售额top10
+     * @param level
+     * @return
+     */
+    public List<Category> getTop10Categories(Integer level) {
+        return null;
     }
 }

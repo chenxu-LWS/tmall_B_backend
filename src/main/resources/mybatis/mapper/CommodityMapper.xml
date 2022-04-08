@@ -15,6 +15,11 @@
         <result column="inventory" property="inventory"/>
         <result column="sale_volume" property="saleVolume"/>
     </resultMap>
+    
+    <resultMap id="commoditySaleGroupByCatMap" type="CommoditySaleVolume">
+        <result property="categoryId" column="category_id"/>
+        <result property="saleVolume" column="sum"/>
+    </resultMap>
 
     <select id="queryCommodityByConditionByPage" resultMap="commodityMap">
         select * from commodity
