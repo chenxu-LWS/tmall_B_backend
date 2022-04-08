@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import com.loveunited.tmall_b_backend.entity.Commodity;
+import com.loveunited.tmall_b_backend.entity.CommoditySaleVolume;
+import com.loveunited.tmall_b_backend.entity.CommoditySaleVolumeByBrand;
 
 /**
  * @author LiuWenshuo
@@ -50,7 +52,9 @@ public interface CommodityMapper {
     public List<Commodity> queryAllByPage(@Param("offset") Integer offset, @Param("pageSize") Integer pageSize);
     public Integer queryAllTotalNum();
 
-    public List<Integer> getTop10Categories(@Param("level") Integer level);
+    public List<CommoditySaleVolume> getTopNCategories(@Param("topN") Integer topN);
+    public List<Commodity> getTopNCommodities(@Param("topN") Integer topN);
+    public List<CommoditySaleVolumeByBrand> getTopNBrands(@Param("topN") Integer topN);
 
     public Integer insertCommodity(Commodity commodity);
     public Integer updateCommodityProperties(@Param("id") Integer id, @Param("props") String props);
