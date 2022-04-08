@@ -50,6 +50,8 @@ public interface CommodityMapper {
     public List<Commodity> queryAllByPage(@Param("offset") Integer offset, @Param("pageSize") Integer pageSize);
     public Integer queryAllTotalNum();
 
+    public List<Integer> getTop10Categories(@Param("level") Integer level);
+
     public Integer insertCommodity(Commodity commodity);
     public Integer updateCommodityProperties(@Param("id") Integer id, @Param("props") String props);
     public Integer updateCommodityStatus(@Param("id") Integer id, @Param("status") Integer status);

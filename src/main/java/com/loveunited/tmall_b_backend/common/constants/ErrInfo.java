@@ -23,6 +23,7 @@ public enum ErrInfo {
     BRAND_ID_NOT_EXISTS(1007, "当前品牌ID不存在"),
     INSERT_BRAND_NAME_EXISTS(1008, "待新增的品牌名已存在"),
     DELETE_BRAND_ERROR_COMMODITY_BIND(1009, "当前品牌下有绑定的商品，无法删除"),
+    COMMODITY_INSERT_NOT_AVAILABLE(1010, "品类ID不合法，只能往三级品类插入商品"),
 
     // 商品相关
     COMMODITY_ID_NOT_EXISTS(1010, "当前商品ID不存在"),
