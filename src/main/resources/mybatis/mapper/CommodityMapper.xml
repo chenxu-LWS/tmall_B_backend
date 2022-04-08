@@ -21,6 +21,11 @@
         <result property="saleVolume" column="sum"/>
     </resultMap>
 
+    <resultMap id="commoditySaleGroupByBrandMap" type="CommoditySaleVolumeByBrand">
+        <result property="brandId" column="brand_id"/>
+        <result property="saleVolume" column="sum"/>
+    </resultMap>
+
     <select id="queryCommodityByConditionByPage" resultMap="commodityMap">
         select * from commodity
         where 1=1
@@ -135,6 +140,31 @@
     </select>
     <select id="queryAllTotalNum" resultType="java.lang.Integer">
         select count(*) from commodity
+    </select>
+
+    <select id="getTopNCategories" resultMap="commoditySaleGroupByCatMap">
+        select
+               a.category_id, sum(a.sale_volume) as sum
+        from
+            commodity a left join category b on a.category_id = b.id
+        where b.category_level = 3
+        group by a.category_id
+        order by sum desc
+        limit #{topN}
+    </select>
+
+    <select id="getTopNCommodities" resultMap="commodityMap">
+        select * from commodity order by sale_volume desc limit #{topN}
+    </select>
+
+    <select id="getTopNBrands" resultMap="commoditySaleGroupByBrandMap">
+        select
+            a.brand_id, sum(a.sale_volume) as sum
+        from
+            commodity a left join brand b on a.brand_id = b.id
+        group by a.brand_id
+        order by sum desc
+        limit #{topN}
     </select>
 
     <insert id="insertCommodity" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Commodity">

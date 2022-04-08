@@ -332,13 +332,4 @@ public class CommodityService {
                 propK, propV, onlyOnSale));
         return result;
     }
-
-    /**
-     * 根据不同level分类聚合，给出每种分类的总销售额top10
-     * @param level
-     * @return
-     */
-    public List<Category> getTop10Categories(Integer level) {
-        return null;
-    }
 }
