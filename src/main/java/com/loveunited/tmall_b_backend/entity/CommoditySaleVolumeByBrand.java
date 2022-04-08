@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommoditySaleVolumeByBrand {
     private Integer brandId; // 品牌ID
-    private Integer saleVolume; // 当前品牌ID的销量
+    private Double totalPrice; // 当前品牌ID的销量
 }

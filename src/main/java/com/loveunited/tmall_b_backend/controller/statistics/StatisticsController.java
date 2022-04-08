@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.loveunited.tmall_b_backend.common.ReturnListObject;
-import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.entity.CommoditySaleVolume;
 import com.loveunited.tmall_b_backend.entity.CommoditySaleVolumeByBrand;
 import com.loveunited.tmall_b_backend.service.commodity.dto.CommodityDTO;
@@ -29,9 +28,6 @@ public class StatisticsController {
     @RequestMapping("/getTopNCategories")
     @ResponseBody
     public ReturnListObject getTopNCategories(Integer topN) {
-        if (topN == null || topN <= 0) {
-            return new ReturnListObject(ErrInfo.PARAMETER_ERROR);
-        }
         final List<CommoditySaleVolume> topNCategories = statisticsService.getTopNCategories(topN);
         return new ReturnListObject(true, new ArrayList<>(topNCategories), 0);
     }
@@ -39,9 +35,6 @@ public class StatisticsController {
     @RequestMapping("/getTopNCommodities")
     @ResponseBody
     public ReturnListObject getTopNCommodities(Integer topN) {
-        if (topN == null || topN <= 0) {
-            return new ReturnListObject(ErrInfo.PARAMETER_ERROR);
-        }
         final List<CommodityDTO> topNCommodities = statisticsService.getTopNCommodities(topN);
         return new ReturnListObject(true, new ArrayList<>(topNCommodities), 0);
     }
@@ -49,9 +42,6 @@ public class StatisticsController {
     @RequestMapping("/getTopNBrands")
     @ResponseBody
     public ReturnListObject getTopNBrands(Integer topN) {
-        if (topN == null || topN <= 0) {
-            return new ReturnListObject(ErrInfo.PARAMETER_ERROR);
-        }
         final List<CommoditySaleVolumeByBrand> topNBrands = statisticsService.getTopNBrands(topN);
         return new ReturnListObject(true, new ArrayList<>(topNBrands), 0);
     }
