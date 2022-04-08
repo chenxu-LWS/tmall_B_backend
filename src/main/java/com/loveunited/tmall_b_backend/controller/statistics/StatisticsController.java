@@ -45,7 +45,7 @@ public class StatisticsController {
         final List<CommodityDTO> topNCommodities = statisticsService.getTopNCommodities(topN);
         return new ReturnListObject(true, new ArrayList<>(topNCommodities), 0);
     }
-    // 根据分类聚合，给出每种分类的总销售额topN
+    // 根据品牌聚合，给出每种品牌的总销售额topN
     @RequestMapping("/getTopNBrands")
     @ResponseBody
     public ReturnListObject getTopNBrands(Integer topN) {
