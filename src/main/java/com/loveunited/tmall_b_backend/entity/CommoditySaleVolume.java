@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommoditySaleVolume {
     private Integer categoryId; // 种类ID
-    private Integer saleVolume; // 当前种类ID的销量
+    private Double totalPrice; // 当前种类ID的销量
 }
