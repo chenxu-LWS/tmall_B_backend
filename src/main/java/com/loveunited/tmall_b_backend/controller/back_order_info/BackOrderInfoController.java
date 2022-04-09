@@ -2,13 +2,11 @@ package com.loveunited.tmall_b_backend.controller.back_order_info;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.loveunited.tmall_b_backend.common.ReturnObject;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
-import com.loveunited.tmall_b_backend.controller.back_order_info.dto.InsertBackOrderInfoDTO;
 import com.loveunited.tmall_b_backend.service.back_order_info.BackOrderInfoService;
 import com.loveunited.tmall_b_backend.service.commodity.CommodityService;
 import com.loveunited.tmall_b_backend.service.order_info.OrderInfoService;
@@ -39,21 +37,21 @@ public class BackOrderInfoController {
         }
     }
 
-    @RequestMapping("/insert")
-    @ResponseBody
-    public ReturnObject insertBackOrderInfo(@RequestBody InsertBackOrderInfoDTO dto) {
-        try {
-            // 将退货信息更新到订单信息
-            orderInfoService.updateCommodityStatusInOrderInfo(dto.getOrderInfoId(),
-                    dto.getCommodityId(), 3);
-            // 将货物库存还原
-            commodityService.increaseOrDecreaseInventory(dto.getCommodityId(), dto.getBackNum());
-            // 将退货信息入库
-            final Integer result = backOrderInfoService.insertBackOrderInfo(
-                    dto.getOrderInfoId(), dto.getCommodityId(), dto.getBackNum(), dto.getPrice());
-            return new ReturnObject(true, result, 0);
-        } catch (BizException e) {
-            return new ReturnObject(e);
-        }
-    }
+//    @RequestMapping("/insert")
+//    @ResponseBody
+//    public ReturnObject insertBackOrderInfo(@RequestBody InsertBackOrderInfoDTO dto) {
+//        try {
+//            // 将退货信息更新到订单信息
+//            orderInfoService.updateCommodityStatusInOrderInfo(dto.getOrderInfoId(),
+//                    dto.getCommodityId(), 3);
+//            // 将货物库存还原
+//            commodityService.increaseOrDecreaseInventory(dto.getCommodityId(), dto.getBackNum());
+//            // 将退货信息入库
+//            final Integer result = backOrderInfoService.insertBackOrderInfo(
+//                    dto.getOrderInfoId(), dto.getCommodityId(), dto.getBackNum(), dto.getPrice());
+//            return new ReturnObject(true, result, 0);
+//        } catch (BizException e) {
+//            return new ReturnObject(e);
+//        }
+//    }
 }
