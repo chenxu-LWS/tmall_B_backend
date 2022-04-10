@@ -200,4 +200,26 @@
                     ) + (#{stockNum})
         where id = #{id}
     </update>
+
+    <update id="updateCommodity">
+        update commodity
+        <set>
+            <if test="name != null">
+                commodity_name = #{name},
+            </if>
+            <if test="categoryId != null">
+                category_id = #{categoryId},
+            </if>
+            <if test="brandId != null">
+                brand_id = #{brandId},
+            </if>
+            <if test="price != null">
+                commodity_price = #{price},
+            </if>
+            <if test="detail != null">
+                detail = #{detail},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>
