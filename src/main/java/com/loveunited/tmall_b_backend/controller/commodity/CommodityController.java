@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryByBrandIdByP
 import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryByCategoryIdByPageDTO;
 import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryByStatusByPageDTO;
 import com.loveunited.tmall_b_backend.controller.commodity.dto.QueryCommodityByConditionDTO;
+import com.loveunited.tmall_b_backend.controller.commodity.dto.UpdateCommodityDTO;
 import com.loveunited.tmall_b_backend.controller.commodity.dto.UpdateCommodityPropDTO;
 import com.loveunited.tmall_b_backend.entity.CommodityPicture;
 import com.loveunited.tmall_b_backend.service.category.CategoryService;
@@ -118,7 +120,7 @@ public class CommodityController {
     @PostMapping("/queryByStatusByPage")
     @ResponseBody
     public ReturnPageObject<CommodityDTO> queryByStatusByPage(@RequestBody QueryByStatusByPageDTO dto) {
-        if (dto == null || dto.getStatus() == null || dto.hasNull() || dto.getStatus() <0 || dto.getStatus() > 2) {
+        if (dto == null || dto.getStatus() == null || dto.hasNull() || dto.getStatus() <0 || dto.getStatus() > 3) {
             return new ReturnPageObject<>(ErrInfo.PARAMETER_ERROR);
         }
         final PageBean<CommodityDTO> commodityDTOPageBean =
@@ -213,6 +215,37 @@ public class CommodityController {
     public ReturnObject updateProp(@RequestBody UpdateCommodityPropDTO dto) {
         try {
             final Integer result = commodityService.updateProp(dto.getId(), dto.getNewProps());
+            return new ReturnObject(true, result, 0);
+        } catch (BizException e) {
+            return new ReturnObject(e);
+        }
+    }
+
+    @PostMapping("/updateCommodity")
+    @ResponseBody
+    public ReturnObject updateCommodity(@RequestBody UpdateCommodityDTO dto) {
+        if (dto.getId() == null) {
+            return new ReturnObject(ErrInfo.PARAMETER_ERROR);
+        }
+        try {
+            final Integer result = commodityService.updateCommodity(
+                    dto.getId(), dto.getName(), dto.getCategoryID(),
+                    dto.getBrandID(), dto.getPrice(), dto.getDetail()
+            );
+            return new ReturnObject(true, result, 0);
+        } catch (BizException e) {
+            return new ReturnObject(e);
+        }
+    }
+
+    @GetMapping("/deleteCommodity")
+    @ResponseBody
+    public ReturnObject deleteCommodity(Integer commodityId) {
+        if (commodityId == null) {
+            return new ReturnObject(ErrInfo.PARAMETER_ERROR);
+        }
+        try {
+            final Integer result = commodityService.deleteCommodity(commodityId);
             return new ReturnObject(true, result, 0);
         } catch (BizException e) {
             return new ReturnObject(e);

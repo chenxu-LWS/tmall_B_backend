@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONException;
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
 import com.loveunited.tmall_b_backend.common.page.PageBean;
+import com.loveunited.tmall_b_backend.entity.Brand;
 import com.loveunited.tmall_b_backend.entity.Category;
 import com.loveunited.tmall_b_backend.entity.Commodity;
 import com.loveunited.tmall_b_backend.mapper.BrandMapper;
@@ -261,6 +262,22 @@ public class CommodityService {
     }
 
     /**
+     * 将商品删除
+     * @param id
+     * @return
+     */
+    public Integer deleteCommodity(Integer id) {
+        final Commodity commodity = commodityMapper.queryCommodityById(id);
+        if (commodity == null) {
+            throw new BizException(ErrInfo.COMMODITY_ID_NOT_EXISTS);
+        }
+        if (commodity.getStatus() == 1) {
+            throw new BizException(ErrInfo.COMMODITY_DELETE_STATUS_ERROR);
+        }
+        return commodityMapper.updateCommodityStatus(id, 3);
+    }
+
+    /**
      * 更新筛选标签
      * @param id
      * @param prop
@@ -282,6 +299,39 @@ public class CommodityService {
             throw new BizException(ErrInfo.COMMODITY_ID_NOT_EXISTS);
         }
         return commodityMapper.updateCommodityProperties(id, prop);
+    }
+
+    /**
+     * 更改商品基本信息
+     * @param id
+     * @param name
+     * @param categoryID
+     * @param brandID
+     * @param price
+     * @param detail
+     * @return
+     */
+    public Integer updateCommodity(Integer id, String name,
+            Integer categoryID, Integer brandID, Double price, String detail) {
+        final Commodity commodity = commodityMapper.queryCommodityById(id);
+        if (commodity == null) {
+            throw new BizException(ErrInfo.COMMODITY_ID_NOT_EXISTS);
+        }
+        if (categoryID != null) {
+            final Category category = categoryMapper.queryCategoryById(categoryID);
+            if (category == null) {
+                throw new BizException(ErrInfo.CATEGORY_ID_NOT_EXISTS);
+            } else if (category.getLevel() != 3) {
+                throw new BizException(ErrInfo.COMMODITY_INSERT_NOT_AVAILABLE);
+            }
+        }
+        if (brandID != null) {
+            final Brand brand = brandMapper.queryBrandById(brandID);
+            if (brand == null) {
+                throw new BizException(ErrInfo.BRAND_ID_NOT_EXISTS);
+            }
+        }
+        return commodityMapper.updateCommodity(id, name, categoryID, brandID, price, detail);
     }
 
     /**
