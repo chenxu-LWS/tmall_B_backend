@@ -2,6 +2,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+src/main/java/com/loveunited/tmall_b_backend/common/oss/OssClient.java
 
 ### STS ###
 .apt_generated
