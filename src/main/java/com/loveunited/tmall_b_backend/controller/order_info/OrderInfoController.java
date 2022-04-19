@@ -12,6 +12,8 @@ import com.loveunited.tmall_b_backend.common.ReturnPageObject;
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
 import com.loveunited.tmall_b_backend.common.page.PageBean;
+import com.loveunited.tmall_b_backend.controller.PageBaseDTO;
+import com.loveunited.tmall_b_backend.controller.order_info.dto.QueryByTimeByPageDTO;
 import com.loveunited.tmall_b_backend.controller.order_info.dto.QueryOrderInfoByCustomerNameByPageDTO;
 import com.loveunited.tmall_b_backend.service.commodity.CommodityService;
 import com.loveunited.tmall_b_backend.service.order_info.OrderInfoService;
@@ -48,6 +50,28 @@ public class OrderInfoController {
         }
         final PageBean<OrderInfoDTO> orderInfoDTOPageBean = orderInfoService
                 .queryOrderInfoByCustomerNameByPage(dto.getCustomerName(), dto.getPageNo(), dto.getPageSize());
+        return new ReturnPageObject<>(true, orderInfoDTOPageBean, 0);
+    }
+
+    @PostMapping("/queryAllByPage")
+    @ResponseBody
+    public ReturnPageObject<OrderInfoDTO> queryAllByPage(@RequestBody PageBaseDTO dto) {
+        if (dto.hasNull()) {
+            return new ReturnPageObject<>(ErrInfo.PARAMETER_ERROR);
+        }
+        final PageBean<OrderInfoDTO> orderInfoDTOPageBean = orderInfoService
+                .queryAllByPage(dto.getPageNo(), dto.getPageSize());
+        return new ReturnPageObject<>(true, orderInfoDTOPageBean, 0);
+    }
+
+    @PostMapping("/queryByTimeByPage")
+    @ResponseBody
+    public ReturnPageObject<OrderInfoDTO> queryByTimeByPage(@RequestBody QueryByTimeByPageDTO dto) {
+        if (dto.hasNull()) {
+            return new ReturnPageObject<>(ErrInfo.PARAMETER_ERROR);
+        }
+        final PageBean<OrderInfoDTO> orderInfoDTOPageBean = orderInfoService
+                .queryByTimeByPage(dto.getStartTime(), dto.getEndTime(), dto.getPageNo(), dto.getPageSize());
         return new ReturnPageObject<>(true, orderInfoDTOPageBean, 0);
     }
 }

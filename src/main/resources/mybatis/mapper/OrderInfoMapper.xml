@@ -22,6 +22,37 @@
         select count(*) from orderinfo where customer_name = #{customerName}
     </select>
 
+    <select id="queryAllByPage" resultMap="orderInfoMap">
+        select * from orderinfo limit #{offset}, #{pageSize}
+    </select>
+    <select id="queryAllTotalNum" resultType="java.lang.Integer">
+        select count(*) from orderinfo
+    </select>
+
+    <select id="queryByTimeByPage" resultMap="orderInfoMap">
+        select * from orderinfo
+        where
+        1=1
+        <if test="startTime != null">
+            and order_time <![CDATA[ >= ]]> #{startTime}
+        </if>
+        <if test="endTime != null">
+            and order_time <![CDATA[ <= ]]> #{endTime}
+        </if>
+        limit #{offset}, #{pageSize}
+    </select>
+    <select id="queryByTimeTotalNum" resultType="java.lang.Integer">
+        select count(*) from orderinfo
+        where
+          1=1
+          <if test="startTime != null">
+              and order_time <![CDATA[ >= ]]> #{startTime}
+          </if>
+          <if test="endTime != null">
+            and order_time <![CDATA[ <= ]]> #{endTime}
+          </if>
+    </select>
+
     <insert id="insertOrderInfo" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="OrderInfo">
         insert into
             orderinfo (customer_name, detail, order_price, order_time)

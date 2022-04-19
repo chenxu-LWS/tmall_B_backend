@@ -1,5 +1,6 @@
 package com.loveunited.tmall_b_backend.service.order_info;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -65,5 +66,40 @@ public class OrderInfoService {
         OrderInfo orderInfo = new OrderInfo(orderInfoId, null,
                 JSON.toJSONString(oldDetailJSON), null, null);
         return orderInfoMapper.updateCommodityStatusInOrderInfo(orderInfo);
+    }
+
+    public PageBean<OrderInfoDTO> queryAllByPage(Integer pageNo, Integer pageSize) {
+        final List<OrderInfo> orderInfos =
+                orderInfoMapper.queryAllByPage(pageNo * pageSize, pageSize);
+        List<OrderInfoDTO> dtos = new ArrayList<>();
+        orderInfos.forEach(orderInfo -> dtos.add(new OrderInfoDTO(orderInfo)));
+        PageBean<OrderInfoDTO> result = new PageBean<>();
+        result.setPageNo(pageNo);
+        result.setPageSize(pageSize);
+        result.setList(dtos);
+        result.setTotalNum(orderInfoMapper.queryAllTotalNum());
+        return result;
+    }
+
+    public PageBean<OrderInfoDTO> queryByTimeByPage(Long startTime, Long endTime,
+            Integer pageNo, Integer pageSize) {
+        Timestamp start = null;
+        Timestamp end = null;
+        if (startTime != null) {
+            start = new Timestamp(startTime);
+        }
+        if (endTime != null) {
+            end = new Timestamp(endTime);
+        }
+        final List<OrderInfo> orderInfos =
+                orderInfoMapper.queryByTimeByPage(start, end, pageNo * pageSize, pageSize);
+        List<OrderInfoDTO> dtos = new ArrayList<>();
+        orderInfos.forEach(orderInfo -> dtos.add(new OrderInfoDTO(orderInfo)));
+        PageBean<OrderInfoDTO> result = new PageBean<>();
+        result.setPageNo(pageNo);
+        result.setPageSize(pageSize);
+        result.setList(dtos);
+        result.setTotalNum(orderInfoMapper.queryByTimeTotalNum(start, end));
+        return result;
     }
 }
