@@ -1,10 +1,14 @@
 package com.loveunited.tmall_b_backend.service.back_order_info;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loveunited.tmall_b_backend.common.constants.ErrInfo;
 import com.loveunited.tmall_b_backend.common.exception.BizException;
+import com.loveunited.tmall_b_backend.common.page.PageBean;
 import com.loveunited.tmall_b_backend.entity.BackOrderInfo;
 import com.loveunited.tmall_b_backend.mapper.BackOrderInfoMapper;
 import com.loveunited.tmall_b_backend.mapper.CommodityMapper;
@@ -39,6 +43,23 @@ public class BackOrderInfoService {
         BackOrderInfoDTO result = new BackOrderInfoDTO(backOrderInfo);
         result.setCommodityDTO(commodityService.queryById(backOrderInfo.getCommodityId()));
         result.setOrderInfoDTO(orderInfoService.queryOrderInfoById(backOrderInfo.getOrderInfoId()));
+        return result;
+    }
+
+    public PageBean<BackOrderInfoDTO> queryAllByPage(Integer pageNo, Integer pageSize) {
+        final List<BackOrderInfo> backOrderInfos = backOrderInfoMapper.queryAllByPage(pageNo * pageSize, pageSize);
+        PageBean<BackOrderInfoDTO> result = new PageBean<>();
+        List<BackOrderInfoDTO> resList = new ArrayList<>();
+        backOrderInfos.forEach(backOrderInfo -> {
+            BackOrderInfoDTO res = new BackOrderInfoDTO(backOrderInfo);
+            res.setCommodityDTO(commodityService.queryById(backOrderInfo.getCommodityId()));
+            res.setOrderInfoDTO(orderInfoService.queryOrderInfoById(backOrderInfo.getOrderInfoId()));
+            resList.add(res);
+        });
+        result.setPageNo(pageNo);
+        result.setPageSize(pageSize);
+        result.setList(resList);
+        result.setTotalNum(backOrderInfoMapper.queryAllTotalNum());
         return result;
     }
 

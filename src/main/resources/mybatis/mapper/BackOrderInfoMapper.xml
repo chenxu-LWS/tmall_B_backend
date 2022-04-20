@@ -16,6 +16,13 @@
         select * from backorderinfo where id = #{id}
     </select>
 
+    <select id="queryAllByPage" resultMap="backOrderInfoMap">
+        select * from backorderinfo limit #{offset}, #{pageSize}
+    </select>
+    <select id="queryAllTotalNum" resultType="java.lang.Integer">
+        select count(*) from backorderinfo
+    </select>
+
     <insert id="insertBackOrderInfo" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="OrderInfo">
         insert into
             backorderinfo (orderinfo_id, commodity_id, commodity_back_num, back_price, back_order_time)
