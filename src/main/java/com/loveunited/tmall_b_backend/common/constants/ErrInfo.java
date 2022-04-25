@@ -44,6 +44,8 @@ public enum ErrInfo {
     // 活动相关
     DSL_SYNTAX_ERROR(1019, "活动创建语句语法有误"),
     CATEGORY_LEVEL_NOT_SUPPORTED(1020, "只能对三级品类进行活动发布"),
+    ACTIVITY_ID_NOT_EXISTS(1021, "活动ID不存在"),
+    ACTIVITY_PICTURE_ALREADY_EXISTS(1022, "活动图片已经上传过了"),
 
     // 通用错误码
     PARAMETER_ERROR(10000, "参数不合法"),

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loveunited.tmall_b_backend.mapper.ActivityPictureMapper">
+    <resultMap id="activityPicMap" type="ActivityPicture">
+        <result column="activity_id" property="activityID"/>
+        <result column="picture_obj" property="pictureObj"/>
+    </resultMap>
+
+    <insert id="insertActivityPic" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="ActivityPicture">
+        insert into activity_picture (activity_id, picture_obj)
+        values (#{activityID}, #{pictureObj})
+    </insert>
+
+    <select id="queryActivityPicByID" resultMap="activityPicMap">
+        select * from activity_picture where activity_id = #{activityID}
+    </select>
+</mapper>
