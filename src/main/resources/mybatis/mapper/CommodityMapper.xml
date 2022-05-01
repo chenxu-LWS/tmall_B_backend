@@ -47,6 +47,9 @@
         <if test="priceHigh != null">
             AND commodity_price <![CDATA[ <= ]]> #{priceHigh}
         </if>
+        <if test="ambiName != null">
+            AND commodity_name like '%${ambiName}%'
+        </if>
         <if test="onlyOnSale != null and onlyOnSale != false">
             AND status = 1
         </if>
@@ -75,6 +78,9 @@
         </if>
         <if test="onlyOnSale != null and onlyOnSale != false">
             AND status = 1
+        </if>
+        <if test="ambiName != null">
+            AND commodity_name like '%${ambiName}%'
         </if>
         <if test="priceLow != null">
             AND commodity_price <![CDATA[ >= ]]> #{priceLow}

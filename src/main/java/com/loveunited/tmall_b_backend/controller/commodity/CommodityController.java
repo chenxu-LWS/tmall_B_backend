@@ -111,7 +111,7 @@ public class CommodityController {
     @ResponseBody
     public ReturnPageObject<CommodityDTO> queryCommodityByConditionByPage(@RequestBody QueryCommodityByConditionDTO dto) {
         final PageBean<CommodityDTO> commodityDTOPageBean = commodityService
-                .queryCommodityByConditionByPage(dto.getCategoryId(), dto.getBrandId(),
+                .queryCommodityByConditionByPage(dto.getAmbiName(), dto.getCategoryId(), dto.getBrandId(),
                         dto.getPropK(), dto.getPropV(), dto.getPriceLow(), dto.getPriceHigh(),
                         dto.getSortedBy(), dto.getSortDesc(), dto.getOnlyOnSale(), dto.getPageNo(), dto.getPageSize());
         return new ReturnPageObject<>(true, commodityDTOPageBean, 0);

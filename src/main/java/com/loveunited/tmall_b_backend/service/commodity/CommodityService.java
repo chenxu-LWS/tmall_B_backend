@@ -351,7 +351,7 @@ public class CommodityService {
         return commodityMapper.increaseOrDecreaseInventory(id, num);
     }
 
-    public PageBean<CommodityDTO> queryCommodityByConditionByPage(Integer categoryId, Integer brandId, String propK,
+    public PageBean<CommodityDTO> queryCommodityByConditionByPage(String ambiName, Integer categoryId, Integer brandId, String propK,
             String propV, Double priceLow, Double priceHigh, String sortedBy, Boolean sortDesc, Boolean onlyOnSale,
             Integer pageNo, Integer pageSize) throws BizException {
         // 先查询有没有子类别,放到一个list里，层序遍历图
@@ -369,7 +369,7 @@ public class CommodityService {
             }
         }
         // 查询主逻辑
-        final List<Commodity> commodities = commodityMapper.queryCommodityByConditionByPage(categories,
+        final List<Commodity> commodities = commodityMapper.queryCommodityByConditionByPage(ambiName, categories,
                 brandId,
                 propK, propV, priceLow, priceHigh, sortedBy, sortDesc, onlyOnSale, pageNo * pageSize, pageSize);
         System.out.println(commodities);
@@ -377,7 +377,7 @@ public class CommodityService {
         result.setPageNo(pageNo);
         result.setPageSize(pageSize);
         result.setList(getCommodityDTOList(new ArrayList<>(), commodities));
-        result.setTotalNum(commodityMapper.queryCommodityByConditionTotalNum(categories, brandId,
+        result.setTotalNum(commodityMapper.queryCommodityByConditionTotalNum(ambiName, categories, brandId,
                 priceLow, priceHigh,
                 propK, propV, onlyOnSale));
         return result;

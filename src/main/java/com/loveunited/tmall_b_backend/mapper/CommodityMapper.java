@@ -17,13 +17,15 @@ import com.loveunited.tmall_b_backend.entity.CommoditySaleVolumeByBrand;
 @Mapper
 @Component
 public interface CommodityMapper {
-    public List<Commodity> queryCommodityByConditionByPage(@Param("list") List<Integer> categories, @Param("brandId") Integer brandId,
+    public List<Commodity> queryCommodityByConditionByPage(@Param("ambiName") String ambiName,
+            @Param("list") List<Integer> categories, @Param("brandId") Integer brandId,
             @Param("propK") String propK, @Param("propV") String propV,
             @Param("priceLow") Double priceLow, @Param("priceHigh") Double priceHigh,
             @Param("sortedBy") String sortedBy, @Param("sortDesc") Boolean sortDesc, @Param("onlyOnSale") Boolean onlyOnSale,
             @Param("offset") Integer offset,
             @Param("pageSize") Integer pageSize);
-    public Integer queryCommodityByConditionTotalNum(@Param("list") List<Integer> categories, @Param("brandId") Integer brandId,
+    public Integer queryCommodityByConditionTotalNum(@Param("ambiName") String ambiName,
+            @Param("list") List<Integer> categories, @Param("brandId") Integer brandId,
             @Param("priceLow") Double priceLow, @Param("priceHigh") Double priceHigh,
             @Param("propK") String propK, @Param("propV") String propV, @Param("onlyOnSale") Boolean onlyOnSale);
 
